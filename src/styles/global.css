@@ -645,6 +645,10 @@ a:hover {
   background: var(--color-bg);
 }
 
+.s-about .section-header::before {
+  color: rgba(10, 37, 64, 0.06);
+}
+
 .ps-grid {
   max-width: var(--width-max);
   margin: 0 auto;
@@ -803,6 +807,10 @@ a:hover {
 .s-folio {
   padding: calc(2.5 * var(--space)) 0;
   background: var(--color-bg);
+}
+
+.s-folio .section-header::before {
+  color: rgba(10, 37, 64, 0.06);
 }
 
 .folio-bricks {
