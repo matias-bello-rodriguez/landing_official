@@ -61,36 +61,31 @@ const year = new Date().getFullYear();
 
     <section id="content" class="s-content">
       <section id="intro" class="s-intro target-section">
-        <div
-          class="s-intro__bg"
-          role="img"
-          aria-label="Desarrollador escribiendo código en un MacBook"
-        ></div>
-        <div class="s-intro__content">
-          <div class="s-intro__content-inner">
-            <h1 class="s-intro__content-title">
-              Automatizamos los procesos<br /> de tu empresa
-            </h1>
+        <div class="s-intro__inner">
+          <div class="s-intro__text">
+            <p class="s-intro__eyebrow">Pymatica · Región del Biobío</p>
+            <h1 class="s-intro__title">Automatizamos los procesos de tu empresa</h1>
             <p class="s-intro__lead">
               Software a medida, integración de sistemas y arquitectura de la información para pymes.
             </p>
-            <div class="s-intro__content-buttons">
+            <div class="s-intro__actions">
               <a class="btn btn--primary smoothscroll" href="#footer">Solicitar diagnóstico</a>
-              <a class="btn btn--stroke smoothscroll" href="#services">Ver soluciones</a>
-              <a
-                class="s-intro__content-video-btn smoothscroll"
-                href="#services"
-                aria-label="Ir a soluciones"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  ><path d="M7 6v12l10-6z"></path></svg
-                >
-              </a>
+              <a class="btn btn--ghost smoothscroll" href="#services">Ver soluciones</a>
             </div>
           </div>
+          <figure class="s-intro__figure">
+            <img
+              src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80"
+              alt="Desarrollador trabajando en un portátil con código en pantalla"
+              width="1200"
+              height="900"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </figure>
         </div>
-        <div class="s-intro__scroll-down">
-          <a href="#about" class="smoothscroll"><span>Desplazarse hacia abajo</span></a>
+        <div class="s-intro__scroll">
+          <a href="#about" class="smoothscroll s-intro__scroll-link"><span>Bajar</span></a>
         </div>
       </section>
 
@@ -392,7 +387,7 @@ const year = new Date().getFullYear();
         </div>
         <div class="footer-cta">
           <div class="footer-cta__text">
-            <p class="desc" style="margin-bottom: 1.2rem;">
+            <p class="desc footer-lead">
               ¿Tienes un proyecto en mente? Escríbenos a
             </p>
             <a class="email-link" href="mailto:contacto@pymatica.cl">contacto@pymatica.cl</a>
