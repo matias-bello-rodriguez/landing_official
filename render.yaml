@@ -1,0 +1,7 @@
+# Blueprint: https://docs.render.com/docs/infrastructure-as-code
+services:
+  - type: web
+    name: pymatica-landing
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
