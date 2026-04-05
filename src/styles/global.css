@@ -771,29 +771,6 @@ a {
 
 .s-intro__text { position: relative; }
 
-/* Eyebrow label */
-.s-intro__eyebrow {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  margin: 0 0 1.8rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-.s-intro__eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 2.4rem;
-  height: 2px;
-  background: var(--text-primary);
-  border-radius: 1px;
-}
-
 /* Hero title — word-stagger reveal */
 .s-intro__title {
   font-family: var(--font-display);
