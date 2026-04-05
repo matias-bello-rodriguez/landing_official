@@ -41,6 +41,11 @@ const preloadLcpImage = heroResponsive
     : undefined;
 const preloadLcpSrcset = heroResponsive ? heroAvifSrcset : undefined;
 const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
+
+/** EmailJS — resuelto en build/SSR; el script cliente lee data-* del formulario */
+const emailJsPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
+const emailJsServiceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "";
+const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
 ---
 
 <Layout
@@ -566,7 +571,15 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
             <p class="desc footer-lead">¿Tienes un proyecto en mente? Escríbenos a</p>
             <a class="email-link" href="mailto:contacto@pymatica.cl">contacto@pymatica.cl</a>
           </div>
-          <form class="contact-form" id="cta-form" action="#" method="post">
+          <form
+            class="contact-form"
+            id="cta-form"
+            action="#"
+            method="post"
+            data-ej-pk={emailJsPublicKey}
+            data-ej-sid={emailJsServiceId}
+            data-ej-tid={emailJsTemplateId}
+          >
             <label class="u-screen-reader-text" for="cta-email">Correo electrónico</label>
             <input
               id="cta-email"
@@ -604,10 +617,6 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
     // @ts-nocheck
     import Lenis from 'lenis';
     import emailjs from '@emailjs/browser';
-
-    const emailJsPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? '';
-    const emailJsServiceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? '';
-    const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? '';
 
     /* ─── HELPERS ─── */
     const $ = (sel, ctx) => (ctx || document).querySelector(sel);
@@ -974,15 +983,21 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
       }, { passive: true });
     }
 
-    /* ─── 13. CONTACT FORM — EmailJS (.env: PUBLIC_EMAILJS_*) ─── */
+    /* ─── 13. CONTACT FORM — EmailJS (claves en .env → data-* en el form, ver frontmatter) ─── */
     let emailJsInitialized = false;
 
-    function ensureEmailJs() {
+    function readEmailJsConfig(form) {
+      return {
+        pk: form.dataset.ejPk || '',
+        sid: form.dataset.ejSid || '',
+        tid: form.dataset.ejTid || '',
+      };
+    }
+
+    function ensureEmailJs(cfg) {
       if (emailJsInitialized) return true;
-      if (!emailJsPublicKey || !emailJsServiceId || !emailJsTemplateId) {
-        return false;
-      }
-      emailjs.init({ publicKey: emailJsPublicKey });
+      if (!cfg.pk || !cfg.sid || !cfg.tid) return false;
+      emailjs.init({ publicKey: cfg.pk });
       emailJsInitialized = true;
       return true;
     }
@@ -997,8 +1012,9 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
         if (!input || !input.value.trim()) return;
 
         const email = input.value.trim();
+        const ej = readEmailJsConfig(form);
 
-        if (!ensureEmailJs()) {
+        if (!ensureEmailJs(ej)) {
           alert(
             'El envío por formulario no está configurado. Escríbenos a contacto@pymatica.cl'
           );
@@ -1007,7 +1023,7 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
 
         if (btn) btn.disabled = true;
         try {
-          await emailjs.send(emailJsServiceId, emailJsTemplateId, {
+          await emailjs.send(ej.sid, ej.tid, {
             email,
             sent_at: new Date().toLocaleString('es-CL', {
               timeZone: 'America/Santiago',
