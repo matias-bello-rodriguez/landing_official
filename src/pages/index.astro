@@ -10,20 +10,45 @@ const year = new Date().getFullYear();
 const pubAssets = path.join(process.cwd(), "public", "assets");
 const assetExists = (file: string) => fs.existsSync(path.join(pubAssets, file));
 
-const heroAvif = assetExists("primera_imagen.avif");
-const heroWebp = assetExists("primera_imagen.webp");
-const aboutAvif = assetExists("segunda_imagen.avif");
-const aboutWebp = assetExists("segunda_imagen.webp");
+const HERO_WIDTHS = [560, 840, 1120, 1400] as const;
+const ABOUT_WIDTHS = [480, 720, 960, 1200] as const;
 
-/** Preload debe coincidir con el formato que el navegador elegirá primero (<picture>) */
-const preloadLcpImage = heroAvif
-  ? "/assets/primera_imagen.avif"
-  : heroWebp
-    ? "/assets/primera_imagen.webp"
-    : "/assets/primera_imagen.svg";
+/** Hero: columna imagen ~45vw en desktop; móvil ancho contenido */
+const HERO_SIZES = "(min-width: 960px) min(45vw, 560px), min(100vw - 3rem, 75rem)";
+/** About: bloque a ancho máximo del contenido */
+const ABOUT_SIZES = "min(100vw - 3rem, 75rem)";
+
+function buildSrcset(base: string, ext: "avif" | "webp", widths: readonly number[]) {
+  return widths.map((w) => `/assets/${base}-${w}.${ext} ${w}w`).join(", ");
+}
+
+function hasAllRasterWidths(base: string, widths: readonly number[]) {
+  return widths.every((w) => assetExists(`${base}-${w}.avif`));
+}
+
+const heroResponsive = hasAllRasterWidths("primera_imagen", HERO_WIDTHS);
+const aboutResponsive = hasAllRasterWidths("segunda_imagen", ABOUT_WIDTHS);
+
+const heroAvifSrcset = heroResponsive ? buildSrcset("primera_imagen", "avif", HERO_WIDTHS) : "";
+const heroWebpSrcset = heroResponsive ? buildSrcset("primera_imagen", "webp", HERO_WIDTHS) : "";
+const aboutAvifSrcset = aboutResponsive ? buildSrcset("segunda_imagen", "avif", ABOUT_WIDTHS) : "";
+const aboutWebpSrcset = aboutResponsive ? buildSrcset("segunda_imagen", "webp", ABOUT_WIDTHS) : "";
+
+const preloadLcpImage = heroResponsive
+  ? `/assets/primera_imagen-${HERO_WIDTHS[HERO_WIDTHS.length - 1]}.avif`
+  : assetExists("primera_imagen.svg")
+    ? "/assets/primera_imagen.svg"
+    : undefined;
+const preloadLcpSrcset = heroResponsive ? heroAvifSrcset : undefined;
+const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
 ---
 
-<Layout title={title} preloadLcpImage={preloadLcpImage}>
+<Layout
+  title={title}
+  preloadLcpImage={preloadLcpImage}
+  preloadLcpSrcset={preloadLcpSrcset}
+  preloadLcpSizes={preloadLcpSizes}
+>
   <a class="skip-link" href="#content">Saltar al contenido</a>
 
   <!-- Mobile nav overlay -->
@@ -134,20 +159,29 @@ const preloadLcpImage = heroAvif
             </div>
           </div>
 
-          <!-- Parallax image: AVIF/WebP si existen (npm run assets:images), SVG como respaldo -->
+          <!-- Parallax: srcset tras npm run assets:images; SVG como respaldo -->
           <figure class="s-intro__figure" id="hero-figure">
             <picture>
-              {heroAvif && (
-                <source srcset="/assets/primera_imagen.avif" type="image/avif" />
+              {heroResponsive && (
+                <source
+                  type="image/avif"
+                  srcset={heroAvifSrcset}
+                  sizes={HERO_SIZES}
+                />
               )}
-              {heroWebp && (
-                <source srcset="/assets/primera_imagen.webp" type="image/webp" />
+              {heroResponsive && (
+                <source
+                  type="image/webp"
+                  srcset={heroWebpSrcset}
+                  sizes={HERO_SIZES}
+                />
               )}
               <img
                 src="/assets/primera_imagen.svg"
                 alt="Desarrollador trabajando en un portátil con código en pantalla"
                 width="1400"
                 height="1050"
+                sizes={heroResponsive ? HERO_SIZES : undefined}
                 fetchpriority="high"
                 decoding="sync"
               />
@@ -197,17 +231,26 @@ const preloadLcpImage = heroAvif
         </div>
         <div class="about-visual reveal reveal--scale">
           <picture>
-            {aboutAvif && (
-              <source srcset="/assets/segunda_imagen.avif" type="image/avif" />
+            {aboutResponsive && (
+              <source
+                type="image/avif"
+                srcset={aboutAvifSrcset}
+                sizes={ABOUT_SIZES}
+              />
             )}
-            {aboutWebp && (
-              <source srcset="/assets/segunda_imagen.webp" type="image/webp" />
+            {aboutResponsive && (
+              <source
+                type="image/webp"
+                srcset={aboutWebpSrcset}
+                sizes={ABOUT_SIZES}
+              />
             )}
             <img
               src="/assets/segunda_imagen.svg"
               alt="Equipo de una pyme colaborando y revisando el trabajo juntos"
               width="1400"
               height="788"
+              sizes={aboutResponsive ? ABOUT_SIZES : undefined}
               loading="lazy"
               decoding="async"
             />

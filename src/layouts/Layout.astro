@@ -4,14 +4,19 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description?: string;
-  /** Ruta pública del recurso LCP del hero (p. ej. /assets/primera_imagen.svg) */
+  /** URL de respaldo del preload LCP (p. ej. variante más ancha en AVIF) */
   preloadLcpImage?: string;
+  /** Preload responsivo: debe coincidir con srcset AVIF del <picture> */
+  preloadLcpSrcset?: string;
+  preloadLcpSizes?: string;
 }
 
 const {
   title,
   description = "Pymatica: desarrollo de software, automatización de procesos e integración de sistemas para pymes industriales en la Región del Biobío, Chile.",
   preloadLcpImage,
+  preloadLcpSrcset,
+  preloadLcpSizes,
 } = Astro.props;
 
 function preloadImageType(href: string): string | undefined {
@@ -44,6 +49,8 @@ const preloadLcpType = preloadLcpImage ? preloadImageType(preloadLcpImage) : und
           href={preloadLcpImage}
           as="image"
           fetchpriority="high"
+          {...(preloadLcpSrcset ? { imagesrcset: preloadLcpSrcset } : {})}
+          {...(preloadLcpSizes ? { imagesizes: preloadLcpSizes } : {})}
           {...(preloadLcpType ? { type: preloadLcpType } : {})}
         />
       ) : null
