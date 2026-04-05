@@ -1874,11 +1874,33 @@ a {
 
 /* ─── 24. RESPONSIVE BREAKPOINTS ─── */
 
-/* 320px — small phones */
-@media screen and (max-width: 375px) {
-  .hero-stats { flex-direction: column; gap: 1.5rem; }
-  .s-intro__actions { flex-direction: column; }
-  .s-intro__actions .btn { width: 100%; }
+/* Móvil / tablet: métricas en una sola fila horizontal, reparto equitativo y tipografía más compacta */
+@media screen and (max-width: 959px) {
+  .hero-stats {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: clamp(0.35rem, 2vw, 1rem);
+    margin-top: 3rem;
+  }
+
+  .hero-stat {
+    flex: 1 1 0;
+    min-width: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-stat__number {
+    font-size: clamp(1.65rem, 5.2vw, 2.5rem);
+  }
+
+  .hero-stat__label {
+    font-size: clamp(0.7rem, 2.6vw, 1.05rem);
+    line-height: 1.25;
+    text-wrap: balance;
+  }
 }
 
 /* 768px — tablets */
@@ -1894,8 +1916,26 @@ a {
     padding-bottom: 5rem;
   }
 
-  .hero-stats { gap: 2rem; }
   .text-display-1 { font-size: clamp(2.4rem, 5vw, 3.2rem); }
+}
+
+/* 320px — small phones */
+@media screen and (max-width: 375px) {
+  .hero-stats {
+    gap: 0.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero-stat__number {
+    font-size: clamp(1.45rem, 6vw, 2.2rem);
+  }
+
+  .hero-stat__label {
+    font-size: clamp(0.65rem, 2.4vw, 0.95rem);
+  }
+
+  .s-intro__actions { flex-direction: column; }
+  .s-intro__actions .btn { width: 100%; }
 }
 
 /* 1024px — small desktop */
