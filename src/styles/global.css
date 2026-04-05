@@ -312,7 +312,30 @@ a {
   to { opacity: 1; transform: translateX(0); }
 }
 
-.s-header__brand span { color: var(--accent); }
+@keyframes brand-dot-fall {
+  0% {
+    transform: translateY(-1.05em);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  72% {
+    transform: translateY(0.08em);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.s-header__brand-dot {
+  display: inline-block;
+  color: var(--accent);
+  transform: translateY(-1.05em);
+  opacity: 0;
+  animation: brand-dot-fall 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.72s forwards;
+}
 
 /* Nav container — horizontal row in desktop */
 .s-header__nav {
@@ -1990,6 +2013,17 @@ a {
   .s-intro__title .word {
     opacity: 1;
     transform: none;
+  }
+
+  .s-header__brand {
+    opacity: 1;
+    transform: none;
+  }
+
+  .s-header__brand-dot {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 
   .s-intro__lead,
