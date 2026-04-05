@@ -10,6 +10,12 @@ export const prerender = true;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A premium product landing — minimal, refined, inspired by modern tech aesthetics." />
     <title>Orbit — Designed to feel invisible.</title>
+    <script is:inline>
+      document.documentElement.setAttribute(
+        "data-theme",
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+      );
+    </script>
     <style>
       :root {
         --bg: #ffffff;
@@ -570,24 +576,6 @@ export const prerender = true;
         color: var(--text-tertiary);
       }
 
-      .theme-toggle {
-        background: none;
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        padding: 0.4rem 0.9rem;
-        font-size: 12px;
-        font-family: inherit;
-        color: var(--text-secondary);
-        cursor: pointer;
-        transition:
-          background 0.2s ease,
-          border-color 0.2s ease;
-      }
-
-      .theme-toggle:hover {
-        background: color-mix(in srgb, var(--text) 6%, transparent);
-      }
-
       /* ─── Reveal animations ─── */
       .reveal {
         opacity: 0;
@@ -624,10 +612,7 @@ export const prerender = true;
             <li><a href="#footer">Support</a></li>
           </ul>
         </nav>
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">Appearance</button>
-          <a href="#hero" class="nav__cta">Buy</a>
-        </div>
+        <a href="#hero" class="nav__cta">Buy</a>
       </div>
     </header>
 
@@ -769,7 +754,6 @@ export const prerender = true;
     <script>
       (function () {
         const nav = document.getElementById("nav");
-        const themeToggle = document.getElementById("themeToggle");
         const root = document.documentElement;
         const heroInner = document.getElementById("heroParallaxInner");
         const heroGlow = document.getElementById("heroGlow");
@@ -781,17 +765,8 @@ export const prerender = true;
         window.addEventListener("scroll", onScroll, { passive: true });
         onScroll();
 
-        const saved = localStorage.getItem("orbit-theme");
-        if (saved === "dark" || saved === "light") {
-          root.setAttribute("data-theme", saved);
-        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          root.setAttribute("data-theme", "dark");
-        }
-
-        themeToggle.addEventListener("click", function () {
-          const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-          root.setAttribute("data-theme", next);
-          localStorage.setItem("orbit-theme", next);
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
+          root.setAttribute("data-theme", e.matches ? "dark" : "light");
         });
 
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

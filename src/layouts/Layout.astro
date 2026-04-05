@@ -61,15 +61,10 @@ const preloadLcpType = preloadLcpImage ? preloadImageType(preloadLcpImage) : und
         var d = document.documentElement;
         d.classList.remove("no-js");
         d.classList.add("js");
-        var saved = localStorage.getItem("pymatica-theme");
-        if (saved === "dark" || saved === "light") {
-          d.setAttribute("data-theme", saved);
-        } else {
-          d.setAttribute(
-            "data-theme",
-            window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-          );
-        }
+        d.setAttribute(
+          "data-theme",
+          window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+        );
       })();
     </script>
   </head>

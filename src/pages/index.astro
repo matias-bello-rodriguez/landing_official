@@ -102,14 +102,6 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
               </a>
             </li>
           </ul>
-          <!-- Theme toggle (iOS-style) -->
-          <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-            <span class="toggle-track">
-              <span class="toggle-thumb"></span>
-              <span class="toggle-icon sun">☀️</span>
-              <span class="toggle-icon moon">🌙</span>
-            </span>
-          </button>
           <a class="s-header__menu-button smoothscroll" href="#footer">Agendar reunión</a>
         </nav>
       </div>
@@ -607,7 +599,7 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
 
   <!-- ════════════════════════════════════════
        MAIN JAVASCRIPT
-       Lenis smooth scroll, theme toggle,
+       Lenis smooth scroll, tema según sistema,
        Intersection Observer, parallax, counters,
        canvas grid, navbar scroll, menu mobile,
        ripple effect, active section indicator
@@ -645,43 +637,21 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
       requestAnimationFrame(raf);
     }
 
-    /* ─── 2. THEME TOGGLE — Light/Dark with persistence ─── */
-    function initThemeToggle() {
-      const toggle = $('#themeToggle');
-      if (!toggle) return;
+    /* ─── 2. TEMA — Solo preferencia del sistema (sin toggle ni localStorage) ─── */
+    function initSystemTheme() {
+      const mq = window.matchMedia('(prefers-color-scheme: dark)');
 
-      function getTheme() {
-        const saved = localStorage.getItem('pymatica-theme');
-        if (saved === 'dark' || saved === 'light') return saved;
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-
-      function setTheme(theme) {
-        html.classList.add('theme-transitioning');
-        html.setAttribute('data-theme', theme);
-        localStorage.setItem('pymatica-theme', theme);
-        toggle.setAttribute('aria-label',
-          theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
-        );
-        setTimeout(() => html.classList.remove('theme-transitioning'), 450);
-      }
-
-      const current = getTheme();
-      html.setAttribute('data-theme', current);
-      toggle.setAttribute('aria-label',
-        current === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
-      );
-
-      toggle.addEventListener('click', () => {
-        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        setTheme(next);
-      });
-
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('pymatica-theme')) {
-          setTheme(e.matches ? 'dark' : 'light');
+      function applyFromSystem(withTransition) {
+        const theme = mq.matches ? 'dark' : 'light';
+        if (withTransition) {
+          html.classList.add('theme-transitioning');
+          setTimeout(() => html.classList.remove('theme-transitioning'), 450);
         }
-      });
+        html.setAttribute('data-theme', theme);
+      }
+
+      applyFromSystem(false);
+      mq.addEventListener('change', () => applyFromSystem(true));
     }
 
     /* ─── 3. HERO CANVAS — Animated dot grid (theme-aware) ─── */
@@ -1019,7 +989,7 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
 
     /* ─── INIT ALL ─── */
     initLenis();
-    initThemeToggle();
+    initSystemTheme();
     initHeroCanvas();
     initNavbar();
     initMobileMenu();
