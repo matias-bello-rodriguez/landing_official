@@ -698,7 +698,8 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
       let animId;
 
       function getAccentRGB() {
-        return getComputedStyle(html).getPropertyValue('--accent-rgb').trim();
+        const heroRgb = getComputedStyle(html).getPropertyValue('--hero-canvas-rgb').trim();
+        return heroRgb || getComputedStyle(html).getPropertyValue('--accent-rgb').trim();
       }
 
       function getDotAlpha() {
