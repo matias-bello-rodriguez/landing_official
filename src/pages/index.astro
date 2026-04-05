@@ -6,7 +6,7 @@ const title =
 const year = new Date().getFullYear();
 ---
 
-<Layout title={title}>
+<Layout title={title} preloadLcpImage="/assets/primera_imagen.svg">
   <a class="skip-link" href="#content">Saltar al contenido</a>
 
   <!-- Mobile nav overlay -->
@@ -120,12 +120,13 @@ const year = new Date().getFullYear();
           <!-- Parallax image -->
           <figure class="s-intro__figure" id="hero-figure">
             <img
-              src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80"
+              src="/assets/primera_imagen.svg"
               alt="Desarrollador trabajando en un portátil con código en pantalla"
-              width="1200"
-              height="900"
+              width="1400"
+              height="1050"
               loading="eager"
               fetchpriority="high"
+              decoding="async"
             />
           </figure>
         </div>
@@ -172,11 +173,12 @@ const year = new Date().getFullYear();
         </div>
         <div class="about-visual reveal reveal--scale">
           <img
-            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80"
+            src="/assets/segunda_imagen.svg"
             alt="Equipo de una pyme colaborando y revisando el trabajo juntos"
-            width="1600"
-            height="900"
+            width="1400"
+            height="788"
             loading="lazy"
+            decoding="async"
           />
         </div>
       </section>
