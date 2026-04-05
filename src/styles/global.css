@@ -575,7 +575,11 @@ a {
 
 /* ─── 8. MOBILE NAV ─── */
 @media screen and (max-width: 1100px) {
-  .s-header__menu-toggle { display: block; }
+  .s-header__menu-toggle {
+    display: block;
+    position: relative;
+    z-index: 1010;
+  }
 
   .s-header__nav {
     position: fixed;
@@ -595,7 +599,8 @@ a {
     transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
     box-shadow: -10px 0 50px rgba(0, 0, 0, 0.3);
     border-left: 1px solid var(--border);
-    z-index: 1001;
+    /* Por encima del logo (1003) para que el panel tape “Pymatica” al abrir */
+    z-index: 1005;
   }
 
   .s-header__nav.is-open { transform: translateX(0); }
