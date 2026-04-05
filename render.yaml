@@ -1,7 +1,11 @@
-# Blueprint: https://docs.render.com/docs/infrastructure-as-code
+# Blueprint (IaC): https://render.com/docs/infrastructure-as-code
+# Sitio estático Astro → salida en dist/
 services:
   - type: web
     name: pymatica-landing
     runtime: static
     buildCommand: npm ci && npm run build
-    staticPublishPath: ./dist
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
