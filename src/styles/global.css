@@ -27,10 +27,11 @@
   --border-hover: #CBD5E1;
   --border-accent: rgba(0, 0, 0, 0.14);
 
-  /* Text */
+  /* Text (muted/placeholder reforzados para WCAG AA sobre fondos claros) */
   --text-primary: #0F172A;
   --text-secondary: #475569;
-  --text-muted: #94A3B8;
+  --text-muted: #64748B;
+  --text-placeholder: #5c6b7a;
 
   /* Acento — negro / gris (botones primarios tipo Apple en claro) */
   --accent: #000000;
@@ -106,7 +107,8 @@
 
   --text-primary: #f5f5f7;
   --text-secondary: #a1a1a6;
-  --text-muted: #6e6e73;
+  --text-muted: #98989d;
+  --text-placeholder: #a8a8ad;
 
   /* Acento — blanco / gris claro (botones primarios tipo Apple en oscuro) */
   --accent: #ffffff;
@@ -389,11 +391,11 @@ a {
   color: var(--text-primary);
 }
 
-/* Social icons */
+/* Social icons — área táctil ≥ 44×44 px y separación entre blancos */
 .s-header__social {
   list-style: none;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
   margin: 0;
   padding: 0 0 0 1.2rem;
   border-left: 1px solid var(--border);
@@ -403,8 +405,10 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3.6rem;
-  height: 3.6rem;
+  width: 4.4rem;
+  height: 4.4rem;
+  min-width: 4.4rem;
+  min-height: 4.4rem;
   color: var(--text-muted);
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
@@ -609,7 +613,7 @@ a {
   visibility: visible;
 }
 
-/* ─── 9. CONTENT WRAPPER ─── */
+/* ─── 9. CONTENT WRAPPER (landmark <main> en index) ─── */
 .s-content { position: relative; }
 
 .target-section {
@@ -895,7 +899,7 @@ a {
 .btn--ghost {
   background: transparent;
   color: var(--text-primary);
-  border-color: var(--border-hover);
+  border-color: var(--text-muted);
 }
 
 .btn--ghost:hover {
@@ -1657,7 +1661,10 @@ a {
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.contact-form input::placeholder { color: var(--text-muted); }
+.contact-form input::placeholder {
+  color: var(--text-placeholder);
+  opacity: 1;
+}
 
 .contact-form input:focus {
   outline: none;
