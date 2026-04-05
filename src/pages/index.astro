@@ -41,11 +41,6 @@ const preloadLcpImage = heroResponsive
     : undefined;
 const preloadLcpSrcset = heroResponsive ? heroAvifSrcset : undefined;
 const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
-
-/** EmailJS — expuestas al cliente vía define:vars (prefijo PUBLIC_ en .env) */
-const emailJsPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
-const emailJsServiceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "";
-const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
 ---
 
 <Layout
@@ -605,16 +600,14 @@ const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
        canvas grid, navbar scroll, menu mobile,
        ripple effect, active section indicator
        ════════════════════════════════════════ -->
-  <script
-    define:vars={{
-      emailJsPublicKey,
-      emailJsServiceId,
-      emailJsTemplateId,
-    }}
-  >
+  <script>
     // @ts-nocheck
     import Lenis from 'lenis';
     import emailjs from '@emailjs/browser';
+
+    const emailJsPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? '';
+    const emailJsServiceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? '';
+    const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? '';
 
     /* ─── HELPERS ─── */
     const $ = (sel, ctx) => (ctx || document).querySelector(sel);
