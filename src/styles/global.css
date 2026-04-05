@@ -1052,16 +1052,212 @@ a {
 
 .ps-card--solution .ps-list li::before { background: var(--ok); }
 
-.about-visual {
+/* About — bloque Odoo (logo + rejilla de módulos, modales nativos) */
+.about-odoo {
   max-width: var(--width-max);
   margin: 3.5rem auto 0;
   padding: 0 var(--gutter);
 }
 
-.about-visual img {
-  width: 100%;
-  border-radius: var(--radius-sm);
+.about-odoo__inner {
+  padding: clamp(2rem, 4vw, 3.2rem);
+  background: var(--bg-card);
   border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.about-odoo__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.about-odoo__logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1.4rem;
+  width: 100%;
+  min-height: 4.8rem;
+}
+
+.about-odoo__logo {
+  display: block;
+  width: clamp(17rem, 52vw, 28rem);
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 621 / 196;
+  object-fit: contain;
+  object-position: center;
+}
+
+[data-theme="dark"] .about-odoo__logo {
+  filter: brightness(1.12) contrast(1.06);
+}
+
+.about-odoo__intro {
+  margin: 0 auto;
+  max-width: 52ch;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.about-odoo__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: 1rem;
+}
+
+@media screen and (min-width: 640px) {
+  .about-odoo__grid {
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: 1.2rem;
+  }
+}
+
+.about-odoo__tile {
+  width: 100%;
+  min-height: 11rem;
+  padding: 1.2rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+.about-odoo__tile:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow);
+}
+
+.about-odoo__tile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.about-odoo__tile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: var(--radius-xs);
+  background: var(--bg-tertiary);
+}
+
+.about-odoo__tile-icon img {
+  width: 3.6rem;
+  height: 3.6rem;
+  object-fit: contain;
+}
+
+.about-odoo__tile-label {
+  line-height: 1.25;
+  padding: 0 0.25rem;
+}
+
+/* Modal Odoo (<dialog>) */
+.odoo-modal {
+  margin: auto;
+  padding: 0;
+  max-width: min(100vw - 2rem, 44rem);
+  width: 100%;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.odoo-modal::backdrop {
+  background: rgba(15, 23, 42, 0.55);
+}
+
+[data-theme="dark"] .odoo-modal::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.odoo-modal__panel {
+  position: relative;
+  padding: 2.4rem 2rem 2rem;
+}
+
+.odoo-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.odoo-modal__close:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-hover);
+}
+
+.odoo-modal__close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.odoo-modal__icon {
+  display: block;
+  margin: 0 auto 1.2rem;
+  object-fit: contain;
+}
+
+.odoo-modal__icon[hidden] {
+  display: none;
+}
+
+.odoo-modal__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 2.5vw, 2.6rem);
+  font-weight: 700;
+  margin: 0 3.5rem 1.2rem 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.odoo-modal__body {
+  font-size: 1.55rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.odoo-modal__body p {
+  margin: 0;
 }
 
 /* ─── 14. SERVICES SECTION ─── */

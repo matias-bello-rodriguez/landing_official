@@ -11,12 +11,9 @@ const pubAssets = path.join(process.cwd(), "public", "assets");
 const assetExists = (file: string) => fs.existsSync(path.join(pubAssets, file));
 
 const HERO_WIDTHS = [560, 840, 1120, 1400] as const;
-const ABOUT_WIDTHS = [480, 720, 960, 1200] as const;
 
 /** Hero: columna imagen ~45vw en desktop; móvil ancho contenido */
 const HERO_SIZES = "(min-width: 960px) min(45vw, 560px), min(100vw - 3rem, 75rem)";
-/** About: bloque a ancho máximo del contenido */
-const ABOUT_SIZES = "min(100vw - 3rem, 75rem)";
 
 function buildSrcset(base: string, ext: "avif" | "webp", widths: readonly number[]) {
   return widths.map((w) => `/assets/${base}-${w}.${ext} ${w}w`).join(", ");
@@ -27,12 +24,155 @@ function hasAllRasterWidths(base: string, widths: readonly number[]) {
 }
 
 const heroResponsive = hasAllRasterWidths("primera_imagen", HERO_WIDTHS);
-const aboutResponsive = hasAllRasterWidths("segunda_imagen", ABOUT_WIDTHS);
 
 const heroAvifSrcset = heroResponsive ? buildSrcset("primera_imagen", "avif", HERO_WIDTHS) : "";
 const heroWebpSrcset = heroResponsive ? buildSrcset("primera_imagen", "webp", HERO_WIDTHS) : "";
-const aboutAvifSrcset = aboutResponsive ? buildSrcset("segunda_imagen", "avif", ABOUT_WIDTHS) : "";
-const aboutWebpSrcset = aboutResponsive ? buildSrcset("segunda_imagen", "webp", ABOUT_WIDTHS) : "";
+
+/** Íconos módulos desde GitHub. Logo servido en /odoo-logo.svg (repo oficial Odoo). */
+const odooIconBase = "https://raw.githubusercontent.com/odoo/odoo/17.0/addons";
+
+const odooModules = [
+  {
+    id: "sale",
+    label: "Ventas",
+    icon: `${odooIconBase}/sale/static/description/icon.png`,
+    title: "Ventas",
+    body: "Cotizaciones, órdenes de venta, listas de precios y seguimiento de oportunidades comerciales en un solo flujo. Ideal para estandarizar cómo tu equipo vende y cerrar más rápido.",
+  },
+  {
+    id: "crm",
+    label: "CRM",
+    icon: `${odooIconBase}/crm/static/description/icon.png`,
+    title: "CRM",
+    body: "Embudo de oportunidades, actividades, reuniones y pronósticos. Te ayuda a no perder leads y a priorizar en qué clientes enfocar el esfuerzo comercial.",
+  },
+  {
+    id: "account",
+    label: "Contabilidad",
+    icon: `${odooIconBase}/account/static/description/icon.png`,
+    title: "Contabilidad",
+    body: "Facturación, conciliación bancaria, libros y reportes financieros alineados a buenas prácticas. Menos planillas paralelas y más trazabilidad contable.",
+  },
+  {
+    id: "stock",
+    label: "Inventario",
+    icon: `${odooIconBase}/stock/static/description/icon.png`,
+    title: "Inventario",
+    body: "Ubicaciones, movimientos, trazabilidad por lote/serie y reglas de reabastecimiento. Pensado para bodegas y plantas que necesitan stock confiable en tiempo real.",
+  },
+  {
+    id: "purchase",
+    label: "Compras",
+    icon: `${odooIconBase}/purchase/static/description/icon.png`,
+    title: "Compras",
+    body: "Solicitudes de cotización, órdenes de compra y acuerdos con proveedores. Reduce retrabajo entre compras, bodega y contabilidad.",
+  },
+  {
+    id: "project",
+    label: "Proyecto",
+    icon: `${odooIconBase}/project/static/description/icon.png`,
+    title: "Proyecto",
+    body: "Tareas, hitos, tableros y seguimiento de horas por proyecto. Sirve para implementaciones, obras o servicios con equipos distribuidos.",
+  },
+  {
+    id: "mrp",
+    label: "Fabricación",
+    icon: `${odooIconBase}/mrp/static/description/icon.png`,
+    title: "Fabricación (MRP)",
+    body: "Listas de materiales (BOM), órdenes de fabricación y planificación ligada a inventario. Para pymes que producen y necesitan orden en planta.",
+  },
+  {
+    id: "website",
+    label: "Sitio web",
+    icon: `${odooIconBase}/website/static/description/icon.png`,
+    title: "Sitio web",
+    body: "Constructor de páginas, formularios y presencia online integrada con el resto de apps. Menos herramientas sueltas para mantener tu marca.",
+  },
+  {
+    id: "website_sale",
+    label: "eCommerce",
+    icon: `${odooIconBase}/website_sale/static/description/icon.png`,
+    title: "eCommerce",
+    body: "Tienda online con carrito, pagos y catálogo conectado al inventario. Útil si vendes B2B o B2C y quieres un solo stock de verdad.",
+  },
+  {
+    id: "hr",
+    label: "RR. HH.",
+    icon: `${odooIconBase}/hr/static/description/icon.png`,
+    title: "Recursos humanos",
+    body: "Fichas de empleados, departamentos, contratos y datos centralizados. Base para escalar procesos de people ops sin carpetas dispersas.",
+  },
+  {
+    id: "point_of_sale",
+    label: "TPV / POS",
+    icon: `${odooIconBase}/point_of_sale/static/description/icon.png`,
+    title: "Punto de venta",
+    body: "Caja retail con productos, variantes y cobros. Se integra con inventario y facturación según tu configuración.",
+  },
+  {
+    id: "mass_mailing",
+    label: "Email marketing",
+    icon: `${odooIconBase}/mass_mailing/static/description/icon.png`,
+    title: "Email marketing",
+    body: "Campañas, listas y plantillas con métricas de apertura y clics. Complementa al CRM para nutrir leads y clientes.",
+  },
+  {
+    id: "calendar",
+    label: "Calendario",
+    icon: `${odooIconBase}/calendar/static/description/icon.png`,
+    title: "Calendario",
+    body: "Agenda compartida, reuniones y recordatorios enlazados a contactos y proyectos. Mejora la coordinación entre áreas.",
+  },
+  {
+    id: "contacts",
+    label: "Contactos",
+    icon: `${odooIconBase}/contacts/static/description/icon.png`,
+    title: "Contactos",
+    body: "Personas y empresas unificadas: direcciones, etiquetas e historial. Es el directorio maestro que alimenta ventas, compras y facturación.",
+  },
+  {
+    id: "hr_expense",
+    label: "Gastos",
+    icon: `${odooIconBase}/hr_expense/static/description/icon.png`,
+    title: "Gastos",
+    body: "Registro de gastos, adjuntos y flujos de aprobación hacia contabilidad. Menos papel y más control sobre rendiciones.",
+  },
+  {
+    id: "hr_holidays",
+    label: "Ausencias",
+    icon: `${odooIconBase}/hr_holidays/static/description/icon.png`,
+    title: "Tiempo libre y ausencias",
+    body: "Solicitudes de vacaciones, permisos y balances visibles para el equipo y RR. HH. Transparente y auditable.",
+  },
+  {
+    id: "maintenance",
+    label: "Mantenimiento",
+    icon: `${odooIconBase}/maintenance/static/description/icon.png`,
+    title: "Mantenimiento",
+    body: "Órdenes de trabajo en equipos e instalaciones, preventivo y correctivo. Para plantas que dependen de máquinas disponibles.",
+  },
+  {
+    id: "fleet",
+    label: "Flota",
+    icon: `${odooIconBase}/fleet/static/description/icon.png`,
+    title: "Flota",
+    body: "Vehículos, contratos, servicios y costos asociados. Ayuda a controlar la operación móvil o logística con activos propios.",
+  },
+  {
+    id: "repair",
+    label: "Reparaciones",
+    icon: `${odooIconBase}/repair/static/description/icon.png`,
+    title: "Reparaciones",
+    body: "Gestión de reparaciones de productos devueltos o en garantía, vinculada a inventario y facturación cuando aplica.",
+  },
+  {
+    id: "im_livechat",
+    label: "Live chat",
+    icon: `${odooIconBase}/im_livechat/static/description/icon.png`,
+    title: "Chat en vivo",
+    body: "Atención instantánea en tu sitio web con historial y vínculo a oportunidades CRM. Mejora conversión y soporte en la primera visita.",
+  },
+] as const;
 
 const preloadLcpImage = heroResponsive
   ? `/assets/primera_imagen-${HERO_WIDTHS[HERO_WIDTHS.length - 1]}.avif`
@@ -216,33 +356,68 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
             </ul>
           </div>
         </div>
-        <div class="about-visual reveal reveal--scale">
-          <picture>
-            {aboutResponsive && (
-              <source
-                type="image/avif"
-                srcset={aboutAvifSrcset}
-                sizes={ABOUT_SIZES}
-              />
-            )}
-            {aboutResponsive && (
-              <source
-                type="image/webp"
-                srcset={aboutWebpSrcset}
-                sizes={ABOUT_SIZES}
-              />
-            )}
-            <img
-              src="/assets/segunda_imagen.svg"
-              alt="Equipo de una pyme colaborando y revisando el trabajo juntos"
-              width="1400"
-              height="788"
-              sizes={aboutResponsive ? ABOUT_SIZES : undefined}
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
+        <div class="about-odoo reveal reveal--scale">
+          <div class="about-odoo__inner">
+            <header class="about-odoo__header">
+              <div class="about-odoo__logo-wrap">
+                <img
+                  class="about-odoo__logo"
+                  src="/odoo-logo.svg"
+                  alt="Odoo"
+                  width="621"
+                  height="196"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <p class="about-odoo__intro">
+                Suite de aplicaciones de negocio de código abierto. Toca un módulo para ver en qué ayuda a tu operación.
+              </p>
+            </header>
+            <ul class="about-odoo__grid" role="list">
+              {odooModules.map((m) => (
+                <li>
+                  <button
+                    type="button"
+                    class="about-odoo__tile"
+                    data-module={m.id}
+                    aria-haspopup="dialog"
+                    aria-controls="odoo-module-dialog"
+                  >
+                    <span class="about-odoo__tile-icon">
+                      <img
+                        src={m.icon}
+                        alt=""
+                        width="56"
+                        height="56"
+                        loading="lazy"
+                        decoding="async"
+                        referrerpolicy="no-referrer"
+                      />
+                    </span>
+                    <span class="about-odoo__tile-label">{m.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
+
+        <dialog id="odoo-module-dialog" class="odoo-modal" aria-labelledby="odoo-modal-title">
+          <div class="odoo-modal__panel">
+            <button type="button" class="odoo-modal__close" aria-label="Cerrar ventana">
+              ×
+            </button>
+            <img class="odoo-modal__icon" src="" alt="" width="72" height="72" hidden />
+            <h2 id="odoo-modal-title" class="odoo-modal__title"></h2>
+            <div class="odoo-modal__body"></div>
+          </div>
+        </dialog>
+        <script
+          type="application/json"
+          id="odoo-modules-json"
+          set:html={JSON.stringify(odooModules)}
+        />
       </section>
 
       <!-- ════════════════════════════════════════
@@ -983,6 +1158,55 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
       });
     }
 
+    /* ─── 14. ODOO MODULES — <dialog> + JSON en #odoo-modules-json ─── */
+    function initOdooModals() {
+      const dataEl = document.getElementById('odoo-modules-json');
+      const dialog = document.getElementById('odoo-module-dialog');
+      if (!dataEl || !dialog) return;
+
+      let modules;
+      try {
+        modules = JSON.parse(dataEl.textContent || '[]');
+      } catch {
+        return;
+      }
+
+      const titleEl = dialog.querySelector('#odoo-modal-title');
+      const bodyEl = dialog.querySelector('.odoo-modal__body');
+      const iconEl = dialog.querySelector('.odoo-modal__icon');
+      const closeBtn = dialog.querySelector('.odoo-modal__close');
+      if (!titleEl || !bodyEl || !iconEl || !closeBtn) return;
+
+      function openModule(mod) {
+        titleEl.textContent = mod.title;
+        bodyEl.textContent = '';
+        const p = document.createElement('p');
+        p.textContent = mod.body;
+        bodyEl.appendChild(p);
+        iconEl.src = mod.icon;
+        iconEl.alt = '';
+        iconEl.removeAttribute('hidden');
+        dialog.showModal();
+      }
+
+      function closeModal() {
+        dialog.close();
+      }
+
+      $$('.about-odoo__tile').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-module');
+          const mod = modules.find((m) => m.id === id);
+          if (mod) openModule(mod);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) closeModal();
+      });
+    }
+
     /* ─── INIT ALL ─── */
     initLenis();
     initSystemTheme();
@@ -997,5 +1221,6 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
     initRipple();
     initGoTop();
     initForm();
+    initOdooModals();
   </script>
 </Layout>
