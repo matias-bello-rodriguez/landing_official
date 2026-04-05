@@ -19,14 +19,27 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <!-- Theme + JS class — runs before paint to prevent FOUC -->
     <script is:inline>
-      document.documentElement.classList.remove("no-js");
-      document.documentElement.classList.add("js");
+      (function() {
+        var d = document.documentElement;
+        d.classList.remove("no-js");
+        d.classList.add("js");
+        /* Theme: check localStorage, then system preference, default light */
+        var saved = localStorage.getItem("pymatica-theme");
+        if (saved === "dark" || saved === "light") {
+          d.setAttribute("data-theme", saved);
+        } else {
+          d.setAttribute("data-theme",
+            window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+          );
+        }
+      })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>

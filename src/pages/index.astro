@@ -9,8 +9,14 @@ const year = new Date().getFullYear();
 <Layout title={title}>
   <a class="skip-link" href="#content">Saltar al contenido</a>
 
-  <div class="s-pagewrap">
-    <header class="s-header">
+  <!-- Mobile nav overlay -->
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+  <div class="s-pagewrap" id="top">
+    <!-- ════════════════════════════════════════
+         NAVBAR
+         ════════════════════════════════════════ -->
+    <header class="s-header" id="site-header">
       <div class="s-header__inner">
         <a class="s-header__brand smoothscroll" href="#intro">Pymatica<span>.</span></a>
         <button
@@ -24,7 +30,7 @@ const year = new Date().getFullYear();
         </button>
         <nav id="site-nav" class="s-header__nav" aria-label="Principal">
           <ul class="s-header__menu-links">
-            <li class="current"><a href="#intro" class="smoothscroll">Introducción</a></li>
+            <li class="current"><a href="#intro" class="smoothscroll">Inicio</a></li>
             <li><a href="#about" class="smoothscroll">Enfoque</a></li>
             <li><a href="#services" class="smoothscroll">Servicios</a></li>
             <li><a href="#folio" class="smoothscroll">Casos</a></li>
@@ -54,17 +60,39 @@ const year = new Date().getFullYear();
               </a>
             </li>
           </ul>
-          <a class="s-header__menu-button smoothscroll" href="#footer">Agendar</a>
+          <!-- Theme toggle (iOS-style) -->
+          <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+              <span class="toggle-icon sun">☀️</span>
+              <span class="toggle-icon moon">🌙</span>
+            </span>
+          </button>
+          <a class="s-header__menu-button smoothscroll" href="#footer">Agendar reunión</a>
         </nav>
       </div>
     </header>
 
     <section id="content" class="s-content">
+
+      <!-- ════════════════════════════════════════
+           HERO SECTION
+           ════════════════════════════════════════ -->
       <section id="intro" class="s-intro target-section">
+        <!-- Animated grid canvas background -->
+        <canvas class="hero-grid-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+
         <div class="s-intro__inner">
           <div class="s-intro__text">
             <p class="s-intro__eyebrow">Pymatica · Región del Biobío</p>
-            <h1 class="s-intro__title">Automatizamos los procesos de tu empresa</h1>
+            <h1 class="s-intro__title" id="hero-title">
+              <span class="word">Automatizamos </span>
+              <span class="word">los </span>
+              <span class="word">procesos </span>
+              <span class="word">de </span>
+              <span class="word">tu </span>
+              <span class="word">empresa</span>
+            </h1>
             <p class="s-intro__lead">
               Software a medida, integración de sistemas y arquitectura de la información para pymes.
             </p>
@@ -72,8 +100,25 @@ const year = new Date().getFullYear();
               <a class="btn btn--primary smoothscroll" href="#footer">Solicitar diagnóstico</a>
               <a class="btn btn--ghost smoothscroll" href="#services">Ver soluciones</a>
             </div>
+            <!-- Animated counters -->
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <span class="hero-stat__number" data-count="50">0</span>
+                <span class="hero-stat__label">Proyectos</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat__number" data-count="8">0</span>
+                <span class="hero-stat__label">Años</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat__number" data-count="30">0</span>
+                <span class="hero-stat__label">Clientes activos</span>
+              </div>
+            </div>
           </div>
-          <figure class="s-intro__figure">
+
+          <!-- Parallax image -->
+          <figure class="s-intro__figure" id="hero-figure">
             <img
               src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80"
               alt="Desarrollador trabajando en un portátil con código en pantalla"
@@ -85,26 +130,28 @@ const year = new Date().getFullYear();
           </figure>
         </div>
         <div class="s-intro__scroll">
-          <a href="#about" class="smoothscroll s-intro__scroll-link"><span>Bajar</span></a>
+          <a href="#about" class="smoothscroll s-intro__scroll-link"><span>Descubre más</span></a>
         </div>
       </section>
 
+      <!-- ════════════════════════════════════════
+           ABOUT / PROBLEMA Y SOLUCIÓN
+           ════════════════════════════════════════ -->
       <section id="about" class="s-about target-section">
-        <div class="section-header" data-num="01">
+        <div class="section-header reveal" data-num="01">
           <h3 class="section-header__pretitle">Problema y solución</h3>
           <div class="section-header__grid">
             <h2 class="text-display-1">
               Cuando Excel, el papel y los sistemas viejos no alcanzan.
             </h2>
             <p class="desc">
-              Las pymes pierden horas en tareas repetitivas, duplican datos y deciden a ciegas.
-              Nosotros ordenamos la información, conectamos lo que ya tienes y automatizamos lo que frena tu
-              operación.
+              Las pymes pierden horas en tareas repetitivas, duplican datos y deciden a ciegas. Nosotros
+              ordenamos la información, conectamos lo que ya tienes y automatizamos lo que frena tu operación.
             </p>
           </div>
         </div>
-        <div class="ps-grid">
-          <div class="ps-card">
+        <div class="ps-grid reveal-group">
+          <div class="ps-card reveal">
             <h3>Lo que duele hoy</h3>
             <ul class="ps-list">
               <li>Procesos manuales y lentos</li>
@@ -113,7 +160,7 @@ const year = new Date().getFullYear();
               <li>Pérdida de tiempo y errores costosos</li>
             </ul>
           </div>
-          <div class="ps-card ps-card--solution">
+          <div class="ps-card ps-card--solution reveal">
             <h3>Cómo lo resolvemos</h3>
             <ul class="ps-list">
               <li>Automatización de flujos y alertas</li>
@@ -123,7 +170,7 @@ const year = new Date().getFullYear();
             </ul>
           </div>
         </div>
-        <div class="about-visual">
+        <div class="about-visual reveal reveal--scale">
           <img
             src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80"
             alt="Equipo de una pyme colaborando y revisando el trabajo juntos"
@@ -134,8 +181,11 @@ const year = new Date().getFullYear();
         </div>
       </section>
 
+      <!-- ════════════════════════════════════════
+           SERVICES / SERVICIOS
+           ════════════════════════════════════════ -->
       <section id="services" class="s-services target-section">
-        <div class="section-header" data-num="02">
+        <div class="section-header reveal" data-num="02">
           <h3 class="section-header__pretitle">Qué hacemos</h3>
           <div class="section-header__grid">
             <h2 class="text-display-1">Cuatro pilares para transformar tu operación.</h2>
@@ -145,8 +195,8 @@ const year = new Date().getFullYear();
             </p>
           </div>
         </div>
-        <div class="services-list">
-          <article class="list-block__item">
+        <div class="services-list reveal-group">
+          <article class="list-block__item reveal" data-tilt>
             <div class="list-block__title">
               <div class="list-block__icon" aria-hidden="true">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -159,8 +209,8 @@ const year = new Date().getFullYear();
             </div>
             <div class="list-block__text">
               <p>
-                Flujos automáticos entre áreas: aprobaciones, notificaciones, cargas de datos
-                recurrentes. Menos tareas manuales, más consistencia en planta y oficina.
+                Flujos automáticos entre áreas: aprobaciones, notificaciones, cargas de datos recurrentes. Menos
+                tareas manuales, más consistencia en planta y oficina.
               </p>
               <div class="list-block__tags">
                 <span class="tag">Flujos automáticos</span>
@@ -168,7 +218,7 @@ const year = new Date().getFullYear();
               </div>
             </div>
           </article>
-          <article class="list-block__item">
+          <article class="list-block__item reveal" data-tilt>
             <div class="list-block__title">
               <div class="list-block__icon" aria-hidden="true">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -190,7 +240,7 @@ const year = new Date().getFullYear();
               </div>
             </div>
           </article>
-          <article class="list-block__item">
+          <article class="list-block__item reveal" data-tilt>
             <div class="list-block__title">
               <div class="list-block__icon" aria-hidden="true">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -212,7 +262,7 @@ const year = new Date().getFullYear();
               </div>
             </div>
           </article>
-          <article class="list-block__item">
+          <article class="list-block__item reveal" data-tilt>
             <div class="list-block__title">
               <div class="list-block__icon" aria-hidden="true">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -237,8 +287,11 @@ const year = new Date().getFullYear();
         </div>
       </section>
 
+      <!-- ════════════════════════════════════════
+           FOLIO / CASOS
+           ════════════════════════════════════════ -->
       <section id="folio" class="s-folio target-section">
-        <div class="section-header" data-num="03">
+        <div class="section-header reveal" data-num="03">
           <h3 class="section-header__pretitle">Casos y ejemplos</h3>
           <div class="section-header__grid">
             <h2 class="text-display-1">Soluciones pensadas para tu rubro.</h2>
@@ -248,8 +301,8 @@ const year = new Date().getFullYear();
             </p>
           </div>
         </div>
-        <div class="folio-bricks">
-          <article class="folio-item">
+        <div class="folio-bricks reveal-group">
+          <article class="folio-item reveal">
             <img
               class="folio-item__img"
               src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80"
@@ -263,7 +316,7 @@ const year = new Date().getFullYear();
               <h3 class="folio-item__title">Conciliaciones, cierres y reportes gerenciales</h3>
             </div>
           </article>
-          <article class="folio-item">
+          <article class="folio-item reveal">
             <img
               class="folio-item__img"
               src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80"
@@ -277,7 +330,7 @@ const year = new Date().getFullYear();
               <h3 class="folio-item__title">Seguimiento de rutas y entregas</h3>
             </div>
           </article>
-          <article class="folio-item">
+          <article class="folio-item reveal">
             <img
               class="folio-item__img"
               src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80"
@@ -291,7 +344,7 @@ const year = new Date().getFullYear();
               <h3 class="folio-item__title">Gestión de proyectos y avances</h3>
             </div>
           </article>
-          <article class="folio-item">
+          <article class="folio-item reveal">
             <img
               class="folio-item__img"
               src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=80"
@@ -308,8 +361,11 @@ const year = new Date().getFullYear();
         </div>
       </section>
 
+      <!-- ════════════════════════════════════════
+           BENEFITS / BENEFICIOS
+           ════════════════════════════════════════ -->
       <section id="beneficios" class="s-benefits target-section">
-        <div class="section-header" data-num="04">
+        <div class="section-header reveal" data-num="04">
           <h3 class="section-header__pretitle">Beneficios</h3>
           <div class="section-header__grid">
             <h2 class="text-display-1">Eficiencia que se nota en la cuenta resultados.</h2>
@@ -319,28 +375,31 @@ const year = new Date().getFullYear();
             </p>
           </div>
         </div>
-        <div class="benefits-grid">
-          <div class="benefit-card">
+        <div class="benefits-grid reveal-group">
+          <div class="benefit-card reveal">
             <strong>Ahorro de tiempo</strong>
             <span>Automatizamos lo repetitivo para que tu gente se ocupe de lo que aporta valor.</span>
           </div>
-          <div class="benefit-card">
+          <div class="benefit-card reveal">
             <strong>Menos errores</strong>
             <span>Un solo origen de datos y validaciones que reducen reprocesos y reclamos.</span>
           </div>
-          <div class="benefit-card">
+          <div class="benefit-card reveal">
             <strong>Control del negocio</strong>
             <span>Visibilidad de inventarios, producción, costos y cumplimiento en un mismo criterio.</span>
           </div>
-          <div class="benefit-card">
+          <div class="benefit-card reveal">
             <strong>Decisiones con datos</strong>
             <span>Indicadores confiables para invertir, contratar o ajustar carga con respaldo.</span>
           </div>
         </div>
       </section>
 
+      <!-- ════════════════════════════════════════
+           PROCESS / PROCESO
+           ════════════════════════════════════════ -->
       <section id="proceso" class="s-process target-section">
-        <div class="section-header" data-num="05">
+        <div class="section-header reveal" data-num="05">
           <h3 class="section-header__pretitle">Cómo trabajamos</h3>
           <div class="section-header__grid">
             <h2 class="text-display-1">Un proceso claro, de punta a punta.</h2>
@@ -350,32 +409,85 @@ const year = new Date().getFullYear();
             </p>
           </div>
         </div>
-        <div class="process-steps">
-          <div class="process-step">
+        <div class="process-steps reveal-group">
+          <div class="process-step reveal">
             <h3>Diagnóstico</h3>
             <p>Recorremos procesos, entrevistamos actores y mapeamos sistemas y cuellos de botella.</p>
           </div>
-          <div class="process-step">
+          <div class="process-step reveal">
             <h3>Diseño de solución</h3>
             <p>Propuesta concreta: alcance, integraciones, datos y entregables medibles.</p>
           </div>
-          <div class="process-step">
+          <div class="process-step reveal">
             <h3>Desarrollo</h3>
             <p>Iteraciones cortas, entregas visibles y pruebas junto a usuarios reales.</p>
           </div>
-          <div class="process-step">
+          <div class="process-step reveal">
             <h3>Implementación</h3>
             <p>Capacitación, migración controlada y go-live con plan de contingencia.</p>
           </div>
-          <div class="process-step">
+          <div class="process-step reveal">
             <h3>Soporte</h3>
             <p>Mejoras continuas, monitoreo y nuevas integraciones cuando los negocios cambian.</p>
           </div>
         </div>
       </section>
 
+      <!-- ════════════════════════════════════════
+           SOCIAL PROOF / CLIENTES (MARQUEE)
+           ════════════════════════════════════════ -->
+      <section class="s-clients" aria-label="Clientes y sectores">
+        <p class="clients-label">Sectores donde generamos impacto</p>
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee__track">
+            <span class="marquee__item">Agroindustria</span>
+            <span class="marquee__item">Constructoras</span>
+            <span class="marquee__item">Minería</span>
+            <span class="marquee__item">Transporte</span>
+            <span class="marquee__item">Retail</span>
+            <span class="marquee__item">Salud</span>
+            <span class="marquee__item">Manufactura</span>
+            <span class="marquee__item">Servicios</span>
+            <span class="marquee__item">Energía</span>
+            <span class="marquee__item">Educación</span>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="marquee__track">
+            <span class="marquee__item">Agroindustria</span>
+            <span class="marquee__item">Constructoras</span>
+            <span class="marquee__item">Minería</span>
+            <span class="marquee__item">Transporte</span>
+            <span class="marquee__item">Retail</span>
+            <span class="marquee__item">Salud</span>
+            <span class="marquee__item">Manufactura</span>
+            <span class="marquee__item">Servicios</span>
+            <span class="marquee__item">Energía</span>
+            <span class="marquee__item">Educación</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════
+           CTA FINAL (Aurora background)
+           ════════════════════════════════════════ -->
+      <section class="s-cta-final target-section">
+        <div class="s-cta-final__inner reveal">
+          <h2 class="s-cta-final__title">
+            Lleva tu operación al<br /><span class="accent-text">siguiente nivel</span>
+          </h2>
+          <p class="s-cta-final__desc">
+            Agenda una reunión sin compromiso. Diagnosticamos tu operación y te mostramos cómo la tecnología
+            puede multiplicar tu eficiencia.
+          </p>
+          <a class="btn btn--primary smoothscroll" href="#footer">Agendar diagnóstico gratuito</a>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════
+           FOOTER
+           ════════════════════════════════════════ -->
       <footer id="footer" class="s-footer target-section">
-        <div class="section-header" data-num="06">
+        <div class="section-header reveal" data-num="06">
           <h3 class="section-header__pretitle">Contacto</h3>
           <div class="section-header__grid">
             <h2 class="text-display-1">Agenda una reunión. Automatiza tu empresa hoy.</h2>
@@ -385,11 +497,9 @@ const year = new Date().getFullYear();
             </p>
           </div>
         </div>
-        <div class="footer-cta">
+        <div class="footer-cta reveal">
           <div class="footer-cta__text">
-            <p class="desc footer-lead">
-              ¿Tienes un proyecto en mente? Escríbenos a
-            </p>
+            <p class="desc footer-lead">¿Tienes un proyecto en mente? Escríbenos a</p>
             <a class="email-link" href="mailto:contacto@pymatica.cl">contacto@pymatica.cl</a>
           </div>
           <form class="contact-form" id="cta-form" action="#" method="post">
@@ -400,7 +510,7 @@ const year = new Date().getFullYear();
               type="email"
               required
               autocomplete="email"
-              placeholder="contacto@pymatica.cl"
+              placeholder="tu@empresa.cl"
             />
             <button class="btn btn--primary" type="submit">Quiero agendar</button>
           </form>
@@ -419,74 +529,430 @@ const year = new Date().getFullYear();
 
   <a href="#top" class="go-top smoothscroll" id="go-top" aria-label="Volver arriba">↑</a>
 
+  <!-- ════════════════════════════════════════
+       MAIN JAVASCRIPT
+       Lenis smooth scroll, theme toggle,
+       Intersection Observer, parallax, counters,
+       canvas grid, navbar scroll, menu mobile,
+       ripple effect, active section indicator
+       ════════════════════════════════════════ -->
   <script>
-    (function () {
-      const nav = document.getElementById("site-nav");
-      const toggle = document.querySelector(".s-header__menu-toggle");
-      const menuLinks = document.querySelectorAll(".s-header__menu-links a");
+    // @ts-nocheck
+    import Lenis from 'lenis';
+
+    /* ─── HELPERS ─── */
+    const $ = (sel, ctx) => (ctx || document).querySelector(sel);
+    const $$ = (sel, ctx) => [...(ctx || document).querySelectorAll(sel)];
+    const html = document.documentElement;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ─── 1. LENIS — Premium smooth scroll ─── */
+    let lenis;
+
+    function initLenis() {
+      if (prefersReducedMotion) return;
+
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        touchMultiplier: 1.5,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+    }
+
+    /* ─── 2. THEME TOGGLE — Light/Dark with persistence ─── */
+    function initThemeToggle() {
+      const toggle = $('#themeToggle');
+      if (!toggle) return;
+
+      function getTheme() {
+        const saved = localStorage.getItem('pymatica-theme');
+        if (saved === 'dark' || saved === 'light') return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function setTheme(theme) {
+        html.classList.add('theme-transitioning');
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('pymatica-theme', theme);
+        toggle.setAttribute('aria-label',
+          theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+        );
+        setTimeout(() => html.classList.remove('theme-transitioning'), 450);
+      }
+
+      const current = getTheme();
+      html.setAttribute('data-theme', current);
+      toggle.setAttribute('aria-label',
+        current === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+      );
+
+      toggle.addEventListener('click', () => {
+        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('pymatica-theme')) {
+          setTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    }
+
+    /* ─── 3. HERO CANVAS — Animated dot grid (theme-aware) ─── */
+    function initHeroCanvas() {
+      const canvas = $('#hero-canvas');
+      if (!canvas || prefersReducedMotion) return;
+      const ctx = canvas.getContext('2d');
+      let w, h, cols, rows, dots;
+      const SPACING = 45;
+      const DOT_RADIUS = 1.2;
+      let mouseX = -1000, mouseY = -1000;
+      const INFLUENCE = 120;
+      let animId;
+
+      function getAccentRGB() {
+        return getComputedStyle(html).getPropertyValue('--accent-rgb').trim();
+      }
+
+      function getDotAlpha() {
+        return parseFloat(getComputedStyle(html).getPropertyValue('--hero-dot-alpha').trim()) || 0.1;
+      }
+
+      function resize() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        w = canvas.width = rect.width;
+        h = canvas.height = rect.height;
+        cols = Math.ceil(w / SPACING) + 1;
+        rows = Math.ceil(h / SPACING) + 1;
+        dots = [];
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            dots.push({ x: c * SPACING, y: r * SPACING, ox: c * SPACING, oy: r * SPACING });
+          }
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        const rgb = getAccentRGB();
+        const baseAlpha = getDotAlpha();
+        for (const dot of dots) {
+          const dx = mouseX - dot.ox;
+          const dy = mouseY - dot.oy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < INFLUENCE) {
+            const force = (1 - dist / INFLUENCE) * 12;
+            dot.x = dot.ox + (dx / dist) * force;
+            dot.y = dot.oy + (dy / dist) * force;
+          } else {
+            dot.x += (dot.ox - dot.x) * 0.08;
+            dot.y += (dot.oy - dot.y) * 0.08;
+          }
+          const alpha = dist < INFLUENCE
+            ? baseAlpha + (1 - dist / INFLUENCE) * 0.5
+            : baseAlpha;
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, DOT_RADIUS, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${rgb}, ${alpha})`;
+          ctx.fill();
+        }
+        animId = requestAnimationFrame(draw);
+      }
+
+      canvas.parentElement.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+      }, { passive: true });
+
+      canvas.parentElement.addEventListener('mouseleave', () => {
+        mouseX = -1000;
+        mouseY = -1000;
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        cancelAnimationFrame(animId);
+        resize();
+        draw();
+      }, { passive: true });
+
+      resize();
+      draw();
+    }
+
+    /* ─── 4. NAVBAR — scroll glass effect + active section indicator ─── */
+    function initNavbar() {
+      const header = $('#site-header');
+      const sections = $$('.target-section');
+      const navLinks = $$('.s-header__menu-links a');
+
+      if (!header) return;
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            if (window.scrollY > 60) {
+              header.classList.add('is-scrolled');
+            } else {
+              header.classList.remove('is-scrolled');
+            }
+
+            let current = '';
+            for (const section of sections) {
+              const rect = section.getBoundingClientRect();
+              if (rect.top <= 150 && rect.bottom > 150) {
+                current = '#' + section.id;
+                break;
+              }
+            }
+            if (current) {
+              navLinks.forEach((link) => {
+                const li = link.closest('li');
+                if (li) {
+                  li.classList.toggle('current', link.getAttribute('href') === current);
+                }
+              });
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+
+    /* ─── 5. MOBILE MENU ─── */
+    function initMobileMenu() {
+      const nav = $('#site-nav');
+      const toggle = $('.s-header__menu-toggle');
+      const overlay = $('#nav-overlay');
+      const menuLinks = $$('.s-header__menu-links a');
+
+      if (!toggle || !nav) return;
 
       function setMenuOpen(open) {
-        if (!nav || !toggle) return;
-        nav.classList.toggle("is-open", open);
-        toggle.classList.toggle("is-clicked", open);
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+        nav.classList.toggle('is-open', open);
+        toggle.classList.toggle('is-clicked', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        if (overlay) overlay.classList.toggle('is-visible', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+        /* Pause/resume Lenis when mobile menu is open */
+        if (lenis) {
+          open ? lenis.stop() : lenis.start();
+        }
       }
 
-      if (toggle && nav) {
-        toggle.addEventListener("click", function () {
-          const open = !nav.classList.contains("is-open");
-          setMenuOpen(open);
-        });
+      toggle.addEventListener('click', () => {
+        setMenuOpen(!nav.classList.contains('is-open'));
+      });
+
+      if (overlay) {
+        overlay.addEventListener('click', () => setMenuOpen(false));
       }
 
-      menuLinks.forEach(function (link) {
-        link.addEventListener("click", function () {
-          if (window.matchMedia("(max-width: 1100px)").matches) {
+      menuLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          if (window.matchMedia('(max-width: 1100px)').matches) {
             setMenuOpen(false);
           }
-          document.querySelectorAll(".s-header__menu-links li").forEach(function (li) {
-            li.classList.remove("current");
-          });
-          const parentLi = link.closest("li");
-          if (parentLi) parentLi.classList.add("current");
         });
       });
+    }
 
-      document.querySelectorAll("a.smoothscroll[href^='#']").forEach(function (anchor) {
-        anchor.addEventListener("click", function (e) {
-          const id = anchor.getAttribute("href");
-          if (!id || id === "#") return;
-          const el = document.querySelector(id);
-          if (el) {
-            e.preventDefault();
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        });
-      });
+    /* ─── 6. SMOOTH SCROLL — powered by Lenis with navbar offset ─── */
+    function initSmoothScroll() {
+      const headerH = () => parseFloat(getComputedStyle(html).getPropertyValue('--header-h')) * 10;
 
-      const goTop = document.getElementById("go-top");
-      if (goTop) {
-        window.addEventListener(
-          "scroll",
-          function () {
-            if (window.scrollY > 500) goTop.classList.add("is-visible");
-            else goTop.classList.remove("is-visible");
-          },
-          { passive: true }
-        );
-      }
-
-      const form = document.getElementById("cta-form");
-      if (form) {
-        form.addEventListener("submit", function (e) {
+      $$("a.smoothscroll[href^='#']").forEach((anchor) => {
+        anchor.addEventListener('click', (e) => {
+          const id = anchor.getAttribute('href');
+          if (!id || id === '#') return;
+          const el = $(id);
+          if (!el) return;
           e.preventDefault();
-          const input = form.querySelector('input[type="email"]');
-          if (input && input.value) {
-            alert("Gracias. Te contactaremos pronto en " + input.value);
+
+          if (lenis) {
+            /* Lenis provides smooth, momentum-based scroll */
+            lenis.scrollTo(el, {
+              offset: -(headerH() + 10),
+              duration: 1.4,
+              easing: (t) => 1 - Math.pow(1 - t, 4),
+            });
+          } else {
+            /* Fallback for reduced-motion or no Lenis */
+            const top = el.getBoundingClientRect().top + window.scrollY - headerH() - 10;
+            window.scrollTo({ top, behavior: 'smooth' });
           }
         });
+      });
+    }
+
+    /* ─── 7. SCROLL REVEAL — Intersection Observer with stagger ─── */
+    function initScrollReveal() {
+      const revealEls = $$('.reveal, .reveal--left, .reveal--right, .reveal--scale, .reveal--fade, .reveal-scale');
+
+      if (prefersReducedMotion) {
+        revealEls.forEach((el) => el.classList.add('is-visible'));
+        return;
       }
-    })();
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+      );
+
+      revealEls.forEach((el) => observer.observe(el));
+    }
+
+    /* ─── 8. ANIMATED COUNTERS ─── */
+    function initCounters() {
+      const counters = $$('[data-count]');
+      if (!counters.length) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const el = entry.target;
+              const target = parseInt(el.getAttribute('data-count'), 10);
+              const duration = 1800;
+              const start = performance.now();
+
+              function update(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+                el.textContent = '+' + current;
+                if (progress < 1) {
+                  requestAnimationFrame(update);
+                }
+              }
+
+              if (prefersReducedMotion) {
+                el.textContent = '+' + target;
+              } else {
+                requestAnimationFrame(update);
+              }
+              observer.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      counters.forEach((c) => observer.observe(c));
+    }
+
+    /* ─── 9. PARALLAX — Hero image follows mouse ─── */
+    function initParallax() {
+      const figure = $('#hero-figure');
+      if (!figure || prefersReducedMotion) return;
+
+      const introSection = $('.s-intro');
+      if (!introSection) return;
+
+      introSection.addEventListener('mousemove', (e) => {
+        const rect = introSection.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        figure.style.transform = `translate(${x * -12}px, ${y * -8}px) rotateY(${x * 2}deg) rotateX(${-y * 2}deg)`;
+      }, { passive: true });
+
+      introSection.addEventListener('mouseleave', () => {
+        figure.style.transform = 'translate(0, 0) rotateY(0) rotateX(0)';
+      }, { passive: true });
+    }
+
+    /* ─── 10. 3D TILT — Service cards ─── */
+    function initCardTilt() {
+      if (prefersReducedMotion) return;
+
+      $$('[data-tilt]').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          card.style.transform = `translateY(-4px) perspective(800px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+        }, { passive: true });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        }, { passive: true });
+      });
+    }
+
+    /* ─── 11. RIPPLE EFFECT — on primary buttons ─── */
+    function initRipple() {
+      $$('.btn--primary').forEach((btn) => {
+        btn.addEventListener('click', function (e) {
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          const rect = btn.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+          ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+          btn.appendChild(ripple);
+          ripple.addEventListener('animationend', () => ripple.remove());
+        });
+      });
+    }
+
+    /* ─── 12. GO-TOP BUTTON ─── */
+    function initGoTop() {
+      const goTop = $('#go-top');
+      if (!goTop) return;
+      window.addEventListener('scroll', () => {
+        goTop.classList.toggle('is-visible', window.scrollY > 600);
+      }, { passive: true });
+    }
+
+    /* ─── 13. CONTACT FORM ─── */
+    function initForm() {
+      const form = $('#cta-form');
+      if (!form) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = form.querySelector('input[type="email"]');
+        if (input && input.value) {
+          alert('Gracias. Te contactaremos pronto en ' + input.value);
+          input.value = '';
+        }
+      });
+    }
+
+    /* ─── INIT ALL ─── */
+    initLenis();
+    initThemeToggle();
+    initHeroCanvas();
+    initNavbar();
+    initMobileMenu();
+    initSmoothScroll();
+    initScrollReveal();
+    initCounters();
+    initParallax();
+    initCardTilt();
+    initRipple();
+    initGoTop();
+    initForm();
   </script>
 </Layout>
