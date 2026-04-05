@@ -41,6 +41,11 @@ const preloadLcpImage = heroResponsive
     : undefined;
 const preloadLcpSrcset = heroResponsive ? heroAvifSrcset : undefined;
 const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
+
+/** EmailJS — expuestas al cliente vía define:vars (prefijo PUBLIC_ en .env) */
+const emailJsPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
+const emailJsServiceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "";
+const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
 ---
 
 <Layout
@@ -600,9 +605,16 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
        canvas grid, navbar scroll, menu mobile,
        ripple effect, active section indicator
        ════════════════════════════════════════ -->
-  <script>
+  <script
+    define:vars={{
+      emailJsPublicKey,
+      emailJsServiceId,
+      emailJsTemplateId,
+    }}
+  >
     // @ts-nocheck
     import Lenis from 'lenis';
+    import emailjs from '@emailjs/browser';
 
     /* ─── HELPERS ─── */
     const $ = (sel, ctx) => (ctx || document).querySelector(sel);
@@ -969,16 +981,54 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
       }, { passive: true });
     }
 
-    /* ─── 13. CONTACT FORM ─── */
+    /* ─── 13. CONTACT FORM — EmailJS (.env: PUBLIC_EMAILJS_*) ─── */
+    let emailJsInitialized = false;
+
+    function ensureEmailJs() {
+      if (emailJsInitialized) return true;
+      if (!emailJsPublicKey || !emailJsServiceId || !emailJsTemplateId) {
+        return false;
+      }
+      emailjs.init({ publicKey: emailJsPublicKey });
+      emailJsInitialized = true;
+      return true;
+    }
+
     function initForm() {
       const form = $('#cta-form');
       if (!form) return;
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const input = form.querySelector('input[type="email"]');
-        if (input && input.value) {
-          alert('Gracias. Te contactaremos pronto en ' + input.value);
+        const btn = form.querySelector('button[type="submit"]');
+        if (!input || !input.value.trim()) return;
+
+        const email = input.value.trim();
+
+        if (!ensureEmailJs()) {
+          alert(
+            'El envío por formulario no está configurado. Escríbenos a contacto@pymatica.cl'
+          );
+          return;
+        }
+
+        if (btn) btn.disabled = true;
+        try {
+          await emailjs.send(emailJsServiceId, emailJsTemplateId, {
+            email,
+            sent_at: new Date().toLocaleString('es-CL', {
+              timeZone: 'America/Santiago',
+            }),
+          });
+          alert('Gracias. Te contactaremos pronto en ' + email);
           input.value = '';
+        } catch (err) {
+          console.error(err);
+          alert(
+            'No pudimos enviar el mensaje. Intenta de nuevo o escribe a contacto@pymatica.cl'
+          );
+        } finally {
+          if (btn) btn.disabled = false;
         }
       });
     }
