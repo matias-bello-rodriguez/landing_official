@@ -43,6 +43,7 @@ const preloadLcpType = preloadLcpImage ? preloadImageType(preloadLcpImage) : und
           rel="preload"
           href={preloadLcpImage}
           as="image"
+          fetchpriority="high"
           {...(preloadLcpType ? { type: preloadLcpType } : {})}
         />
       ) : null

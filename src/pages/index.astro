@@ -1,12 +1,29 @@
 ---
+import fs from "node:fs";
+import path from "node:path";
 import Layout from "../layouts/Layout.astro";
 
 const title =
   "Pymatica — Desarrollo de software, automatización e integración para pymes | Biobío, Chile";
 const year = new Date().getFullYear();
+
+const pubAssets = path.join(process.cwd(), "public", "assets");
+const assetExists = (file: string) => fs.existsSync(path.join(pubAssets, file));
+
+const heroAvif = assetExists("primera_imagen.avif");
+const heroWebp = assetExists("primera_imagen.webp");
+const aboutAvif = assetExists("segunda_imagen.avif");
+const aboutWebp = assetExists("segunda_imagen.webp");
+
+/** Preload debe coincidir con el formato que el navegador elegirá primero (<picture>) */
+const preloadLcpImage = heroAvif
+  ? "/assets/primera_imagen.avif"
+  : heroWebp
+    ? "/assets/primera_imagen.webp"
+    : "/assets/primera_imagen.svg";
 ---
 
-<Layout title={title} preloadLcpImage="/assets/primera_imagen.svg">
+<Layout title={title} preloadLcpImage={preloadLcpImage}>
   <a class="skip-link" href="#content">Saltar al contenido</a>
 
   <!-- Mobile nav overlay -->
@@ -117,17 +134,24 @@ const year = new Date().getFullYear();
             </div>
           </div>
 
-          <!-- Parallax image -->
+          <!-- Parallax image: AVIF/WebP si existen (npm run assets:images), SVG como respaldo -->
           <figure class="s-intro__figure" id="hero-figure">
-            <img
-              src="/assets/primera_imagen.svg"
-              alt="Desarrollador trabajando en un portátil con código en pantalla"
-              width="1400"
-              height="1050"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-            />
+            <picture>
+              {heroAvif && (
+                <source srcset="/assets/primera_imagen.avif" type="image/avif" />
+              )}
+              {heroWebp && (
+                <source srcset="/assets/primera_imagen.webp" type="image/webp" />
+              )}
+              <img
+                src="/assets/primera_imagen.svg"
+                alt="Desarrollador trabajando en un portátil con código en pantalla"
+                width="1400"
+                height="1050"
+                fetchpriority="high"
+                decoding="sync"
+              />
+            </picture>
           </figure>
         </div>
         <div class="s-intro__scroll">
@@ -172,14 +196,22 @@ const year = new Date().getFullYear();
           </div>
         </div>
         <div class="about-visual reveal reveal--scale">
-          <img
-            src="/assets/segunda_imagen.svg"
-            alt="Equipo de una pyme colaborando y revisando el trabajo juntos"
-            width="1400"
-            height="788"
-            loading="lazy"
-            decoding="async"
-          />
+          <picture>
+            {aboutAvif && (
+              <source srcset="/assets/segunda_imagen.avif" type="image/avif" />
+            )}
+            {aboutWebp && (
+              <source srcset="/assets/segunda_imagen.webp" type="image/webp" />
+            )}
+            <img
+              src="/assets/segunda_imagen.svg"
+              alt="Equipo de una pyme colaborando y revisando el trabajo juntos"
+              width="1400"
+              height="788"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </div>
       </section>
 
