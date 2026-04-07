@@ -182,10 +182,7 @@ const preloadLcpImage = heroResponsive
 const preloadLcpSrcset = heroResponsive ? heroAvifSrcset : undefined;
 const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
 
-/** EmailJS — resuelto en build/SSR; el script cliente lee data-* del formulario */
-const emailJsPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
-const emailJsServiceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "";
-const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
+
 ---
 
 <Layout
@@ -746,25 +743,65 @@ const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
             <p class="desc footer-lead">¿Tienes un proyecto en mente? Escríbenos a</p>
             <a class="email-link" href="mailto:contacto@pymatica.cl">contacto@pymatica.cl</a>
           </div>
-          <form
-            class="contact-form"
-            id="cta-form"
-            action="#"
-            method="post"
-            data-ej-pk={emailJsPublicKey}
-            data-ej-sid={emailJsServiceId}
-            data-ej-tid={emailJsTemplateId}
-          >
-            <label class="u-screen-reader-text" for="cta-email">Correo electrónico</label>
-            <input
-              id="cta-email"
-              name="email"
-              type="email"
-              required
-              autocomplete="email"
-              placeholder="tu@empresa.cl"
-            />
-            <button class="btn btn--primary" type="submit">Quiero agendar</button>
+
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="form-group">
+              <label for="user_name">Nombre completo *</label>
+              <input type="text" id="user_name" name="user_name"
+                     placeholder="Tu nombre completo" required autocomplete="name"/>
+              <span class="field-error" id="error-user_name"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="user_email">Correo electrónico *</label>
+              <input type="email" id="user_email" name="user_email"
+                     placeholder="tu@empresa.cl" required autocomplete="email"/>
+              <span class="field-error" id="error-user_email"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="user_phone">Teléfono (opcional)</label>
+              <input type="tel" id="user_phone" name="user_phone"
+                     placeholder="+56 9 XXXX XXXX" autocomplete="tel"/>
+            </div>
+
+            <div class="form-group">
+              <label for="user_company">Empresa (opcional)</label>
+              <input type="text" id="user_company" name="user_company"
+                     placeholder="Nombre de tu empresa"/>
+            </div>
+
+            <div class="form-group">
+              <label for="service_interest">¿Qué servicio te interesa? *</label>
+              <select id="service_interest" name="service_interest" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="ERP">Sistema ERP</option>
+                <option value="Automatización">Automatización de procesos</option>
+                <option value="Desarrollo a medida">Desarrollo a medida</option>
+                <option value="Consultoría">Consultoría tecnológica</option>
+                <option value="Otro">Otro</option>
+              </select>
+              <span class="field-error" id="error-service_interest"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Mensaje *</label>
+              <textarea id="message" name="message" rows="5"
+                        placeholder="Cuéntanos sobre tu proyecto o consulta..."
+                        required></textarea>
+              <span class="field-error" id="error-message"></span>
+            </div>
+
+            <!-- Honeypot anti-spam -->
+            <input type="text" name="bot_field" style="display:none" tabindex="-1" autocomplete="off"/>
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <span class="btn-text">Enviar mensaje</span>
+              <span class="btn-loader" aria-hidden="true"></span>
+              <span class="btn-success-text" aria-hidden="true">✓ Enviado</span>
+            </button>
+
+            <div class="form-status" id="formStatus" role="alert" aria-live="polite"></div>
           </form>
         </div>
         <div class="footer-bottom">
@@ -1158,61 +1195,166 @@ const emailJsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
       }, { passive: true });
     }
 
-    /* ─── 13. CONTACT FORM — EmailJS (claves en .env → data-* en el form, ver frontmatter) ─── */
-    let emailJsInitialized = false;
+    /* ─── 13. CONTACT FORM — EmailJS ─── */
+    const EMAILJS_CONFIG = {
+      serviceId:       'service_8jn6y5r',
+      templateId:      'template_s4fyv79',      // notificación interna
+      templateReplyId: 'template_uqont8f',      // auto-reply al cliente
+      publicKey:       'cl53ezM2SDAFK6NOz',
+    };
 
-    function readEmailJsConfig(form) {
-      return {
-        pk: form.dataset.ejPk || '',
-        sid: form.dataset.ejSid || '',
-        tid: form.dataset.ejTid || '',
-      };
-    }
-
-    function ensureEmailJs(cfg) {
-      if (emailJsInitialized) return true;
-      if (!cfg.pk || !cfg.sid || !cfg.tid) return false;
-      emailjs.init({ publicKey: cfg.pk });
-      emailJsInitialized = true;
-      return true;
-    }
+    const validators = {
+      user_name: v => {
+        if (!v.trim())           return 'El nombre es obligatorio';
+        if (v.trim().length < 2) return 'Mínimo 2 caracteres';
+        return null;
+      },
+      user_email: v => {
+        if (!v.trim())                              return 'El correo es obligatorio';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Correo inválido';
+        return null;
+      },
+      service_interest: v => {
+        if (!v) return 'Selecciona un servicio';
+        return null;
+      },
+      message: v => {
+        if (!v.trim())            return 'El mensaje es obligatorio';
+        if (v.trim().length < 10) return 'Mínimo 10 caracteres';
+        return null;
+      },
+    };
 
     function initForm() {
-      const form = $('#cta-form');
+      const form = $('#contactForm');
       if (!form) return;
-      form.addEventListener('submit', async (e) => {
+
+      emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+
+      const submitBtn  = $('#submitBtn');
+      const btnText    = submitBtn?.querySelector('.btn-text');
+      const btnLoader  = submitBtn?.querySelector('.btn-loader');
+      const btnDone    = submitBtn?.querySelector('.btn-success-text');
+      const formStatus = $('#formStatus');
+
+      function showFieldError(name, msg) {
+        const err = document.getElementById('error-' + name);
+        const inp = form.querySelector('[name="' + name + '"]');
+        if (err) err.textContent = msg || '';
+        if (inp) {
+          inp.classList.toggle('input-error', !!msg);
+          inp.classList.toggle('input-valid', !msg && inp.value.trim() !== '');
+        }
+      }
+
+      // Real-time validation
+      form.querySelectorAll('input, select, textarea').forEach(el => {
+        el.addEventListener('blur', () => {
+          const err = validators[el.name]?.(el.value);
+          showFieldError(el.name, err);
+        });
+        el.addEventListener('input', () => {
+          if (el.classList.contains('input-error')) {
+            const err = validators[el.name]?.(el.value);
+            if (!err) showFieldError(el.name, null);
+          }
+        });
+      });
+
+      function validateAll() {
+        let valid = true;
+        Object.keys(validators).forEach(name => {
+          const el  = form.querySelector('[name="' + name + '"]');
+          const err = el ? validators[name](el.value) : null;
+          showFieldError(name, err);
+          if (err) valid = false;
+        });
+        return valid;
+      }
+
+      function setBtn(state) {
+        if (!submitBtn) return;
+        submitBtn.disabled  = state === 'loading' || state === 'success';
+        if (btnText)   btnText.hidden   = state !== 'idle';
+        if (btnLoader)  btnLoader.hidden = state !== 'loading';
+        if (btnDone)   btnDone.hidden   = state !== 'success';
+        submitBtn.dataset.state = state;
+      }
+
+      function showStatus(type, msg) {
+        if (!formStatus) return;
+        formStatus.textContent = msg;
+        formStatus.className = 'form-status form-status--' + type + ' visible';
+        setTimeout(() => formStatus.classList.remove('visible'), 8000);
+      }
+
+      function isBot() {
+        return form.querySelector('[name="bot_field"]')?.value !== '';
+      }
+
+      form.addEventListener('submit', async e => {
         e.preventDefault();
-        const input = form.querySelector('input[type="email"]');
-        const btn = form.querySelector('button[type="submit"]');
-        if (!input || !input.value.trim()) return;
+        if (isBot()) return;
 
-        const email = input.value.trim();
-        const ej = readEmailJsConfig(form);
-
-        if (!ensureEmailJs(ej)) {
-          alert(
-            'El envío por formulario no está configurado. Escríbenos a contacto@pymatica.cl'
-          );
+        if (!validateAll()) {
+          const firstErr = form.querySelector('.input-error');
+          firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstErr?.focus();
           return;
         }
 
-        if (btn) btn.disabled = true;
+        setBtn('loading');
+
         try {
-          await emailjs.send(ej.sid, ej.tid, {
-            email,
-            sent_at: new Date().toLocaleString('es-CL', {
-              timeZone: 'America/Santiago',
-            }),
-          });
-          alert('Gracias. Te contactaremos pronto en ' + email);
-          input.value = '';
+          // Envío paralelo: notificación interna + auto-reply al cliente
+          const [res1, res2] = await Promise.all([
+            // 1. Notificación interna — llega a Pymatica Chile
+            emailjs.sendForm(
+              EMAILJS_CONFIG.serviceId,
+              EMAILJS_CONFIG.templateId,
+              form
+            ),
+            // 2. Auto-reply — llega al cliente automáticamente
+            emailjs.send(
+              EMAILJS_CONFIG.serviceId,
+              EMAILJS_CONFIG.templateReplyId,
+              {
+                user_name:        form.querySelector('[name="user_name"]').value,
+                user_email:       form.querySelector('[name="user_email"]').value,
+                user_phone:       form.querySelector('[name="user_phone"]').value,
+                user_company:     form.querySelector('[name="user_company"]').value,
+                service_interest: form.querySelector('[name="service_interest"]').value,
+                message:          form.querySelector('[name="message"]').value,
+              }
+            )
+          ]);
+          console.log('Notificación enviada:', res1.status, res1.text);
+          console.log('Auto-reply enviado:',  res2.status, res2.text);
+          setBtn('success');
+          showStatus('success', '✅ ¡Mensaje enviado! Te contactaremos pronto.');
+
+          setTimeout(() => {
+            form.reset();
+            form.querySelectorAll('.input-valid,.input-error').forEach(el => {
+              el.classList.remove('input-valid', 'input-error');
+            });
+            setBtn('idle');
+          }, 3000);
         } catch (err) {
-          console.error(err);
-          alert(
-            'No pudimos enviar el mensaje. Intenta de nuevo o escribe a contacto@pymatica.cl'
-          );
-        } finally {
-          if (btn) btn.disabled = false;
+          console.error('Error en envío EmailJS:', {
+            status:  err.status,
+            text:    err.text,
+            message: err.message
+          });
+          setBtn('error');
+
+          let msg = '❌ Error al enviar. Intenta nuevamente.';
+          if (err.status === 400)  msg = '❌ Error de configuración. Contacta al admin.';
+          if (err.status === 429)  msg = '⏳ Demasiados intentos. Espera unos minutos.';
+          if (!navigator.onLine)   msg = '📡 Sin conexión a internet.';
+
+          showStatus('error', msg);
+          setTimeout(() => setBtn('idle'), 5000);
         }
       });
     }

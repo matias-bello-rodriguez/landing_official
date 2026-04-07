@@ -759,7 +759,7 @@ export const prerender = true;
         const heroGlow = document.getElementById("heroGlow");
 
         function onScroll() {
-          nav.classList.toggle("is-solid", window.scrollY > 8);
+          nav?.classList.toggle("is-solid", window.scrollY > 8);
         }
 
         window.addEventListener("scroll", onScroll, { passive: true });
