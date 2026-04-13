@@ -1919,11 +1919,16 @@ a {
   min-height: 1.4rem;
 }
 
-/* ── Submit button & states ── */
+/* ── Submit button & states (idle / loading / success / error) ── */
 .btn-submit {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
   width: 100%;
-  padding: 1.4rem 2.4rem;
+  min-height: 5.4rem;
+  padding: 1.2rem 2.4rem;
   margin-top: 0.5rem;
   background: var(--accent);
   color: var(--accent-contrast);
@@ -1934,7 +1939,7 @@ a {
   font-weight: 600;
   cursor: pointer;
   overflow: hidden;
-  transition: opacity 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, background 0.25s ease;
 }
 
 .btn-submit:hover:not(:disabled) {
@@ -1942,19 +1947,44 @@ a {
   box-shadow: var(--shadow-glow);
 }
 
-.btn-submit:disabled { cursor: not-allowed; opacity: 0.7; }
-.btn-submit[data-state="success"] { background: #22C55E; }
-.btn-submit[data-state="error"]   { background: #EF4444; }
+.btn-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
 
-/* Loader spinner */
+.btn-submit[data-state="success"] {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.btn-submit[data-state="error"] {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.btn-submit .btn-text,
+.btn-submit .btn-success-text {
+  line-height: 1.25;
+}
+
+.btn-loader[hidden] {
+  display: none !important;
+}
+
+/* Loader spinner (solo visible sin atributo hidden) */
 .btn-loader {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2.5px solid rgba(255,255,255,0.4);
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
   border-top-color: #fff;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
+}
+
+.btn-success-text[hidden] {
+  display: none !important;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }

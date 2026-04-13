@@ -795,10 +795,16 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
             <!-- Honeypot anti-spam -->
             <input type="text" name="bot_field" style="display:none" tabindex="-1" autocomplete="off"/>
 
-            <button type="submit" class="btn-submit" id="submitBtn">
+            <button
+              type="submit"
+              class="btn-submit"
+              id="submitBtn"
+              data-state="idle"
+              aria-busy="false"
+            >
               <span class="btn-text">Enviar mensaje</span>
-              <span class="btn-loader" aria-hidden="true"></span>
-              <span class="btn-success-text" aria-hidden="true">✓ Enviado</span>
+              <span class="btn-loader" aria-hidden="true" hidden></span>
+              <span class="btn-success-text" aria-hidden="true" hidden>✓ Enviado</span>
             </button>
 
             <div class="form-status" id="formStatus" role="alert" aria-live="polite"></div>
@@ -1274,12 +1280,17 @@ const preloadLcpSizes = heroResponsive ? HERO_SIZES : undefined;
 
       function setBtn(state) {
         if (!submitBtn) return;
-        submitBtn.disabled  = state === 'loading' || state === 'success';
-        if (btnText)   btnText.hidden   = state !== 'idle';
-        if (btnLoader)  btnLoader.hidden = state !== 'loading';
-        if (btnDone)   btnDone.hidden   = state !== 'success';
+        const busy = state === 'loading' || state === 'success';
+        submitBtn.disabled = busy;
+        submitBtn.setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
+        const showLabel = state === 'idle' || state === 'error';
+        if (btnText) btnText.hidden = !showLabel;
+        if (btnLoader) btnLoader.hidden = state !== 'loading';
+        if (btnDone) btnDone.hidden = state !== 'success';
         submitBtn.dataset.state = state;
       }
+
+      setBtn('idle');
 
       function showStatus(type, msg) {
         if (!formStatus) return;
