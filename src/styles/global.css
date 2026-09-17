@@ -1,147 +1,163 @@
 ﻿/*
   ============================================================
   Pymatica Chile — Dual Theme System
-  Tema claro/oscuro según prefers-color-scheme · Acento monocromático (estilo Apple)
-  Fonts: system UI stack (sin Google Fonts / mejor LCP y privacidad)
+  Tema claro/oscuro según prefers-color-scheme
+  Identidad: marfil editorial + azul marino + acento azul eléctrico
+  (inspirado en branding de estudios jurídicos de lujo — Hamlin Hamlin & McGill)
+  Fonts: Plus Jakarta Sans (tipografía de marca, definida en Pymatica_propuestas_logo.pdf)
   ============================================================
 */
 
 /* ─── 1. THEME VARIABLES ─── */
 
-/* LIGHT MODE — DEFAULT */
+/* LIGHT MODE — DEFAULT — marfil editorial */
 :root {
   color-scheme: light;
 
   /* Backgrounds */
-  --bg-primary: #F8FAFC;
+  --bg-primary: #F7F4EC;
   --bg-secondary: #FFFFFF;
-  --bg-tertiary: #F1F5F9;
+  --bg-tertiary: #F0EBDD;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #F8FAFC;
-  --bg-surface: #E2E8F0;
-  --bg-glass: rgba(255, 255, 255, 0.88);
+  --bg-card-hover: #FBF9F3;
+  --bg-surface: #EAE3CF;
+  --bg-glass: rgba(247, 244, 236, 0.86);
   --bg-glass-solid: rgba(255, 255, 255, 0.96);
 
   /* Borders */
-  --border: #E2E8F0;
-  --border-hover: #CBD5E1;
-  --border-accent: rgba(0, 0, 0, 0.14);
+  --border: #E4DDC8;
+  --border-hover: #D3C7A6;
+  --border-accent: rgba(10, 23, 71, 0.16);
 
   /* Text (muted/placeholder reforzados para WCAG AA sobre fondos claros) */
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --text-placeholder: #5c6b7a;
+  --text-primary: #0A1747;
+  --text-secondary: #3E4A6E;
+  --text-muted: #6C7594;
+  --text-placeholder: #7A8196;
 
-  /* Acento — negro / gris (botones primarios tipo Apple en claro) */
-  --accent: #000000;
-  --accent-hover: #2c2c2e;
-  --accent-secondary: #3a3a3c;
-  --accent-dim: #1a1a1a;
-  --accent-soft: rgba(0, 0, 0, 0.06);
-  --accent-glow: rgba(0, 0, 0, 0.1);
-  --accent-glow-strong: rgba(0, 0, 0, 0.18);
+  /* Acento — azul marino / azul eléctrico Pymática */
+  --accent: #1657F5;
+  --accent-hover: #0E3FC2;
+  --accent-secondary: #0A1747;
+  --accent-dim: #0A1747;
+  --accent-soft: rgba(22, 87, 245, 0.08);
+  --accent-glow: rgba(22, 87, 245, 0.16);
+  --accent-glow-strong: rgba(22, 87, 245, 0.28);
   --accent-contrast: #ffffff;
-  --accent-rgb: 0, 0, 0;
+  --accent-rgb: 22, 87, 245;
+
+  /* Acento secundario — dorado sutil (detalle "law firm") */
+  --gold: #B6924B;
+  --gold-soft: rgba(182, 146, 75, 0.12);
 
   /* Status */
   --ok: #15803D;
   --ok-soft: rgba(22, 163, 74, 0.1);
 
   /* Typography */
-  --font-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* Shadows */
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 0 40px rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.06);
+  --shadow: 0 4px 24px rgba(10, 23, 71, 0.08);
+  --shadow-lg: 0 20px 60px rgba(10, 23, 71, 0.14);
+  --shadow-glow: 0 0 40px rgba(22, 87, 245, 0.14);
+  --shadow-card: 0 2px 16px rgba(10, 23, 71, 0.07);
 
-  /* Hero — fondo estilo Apple (blanco / plomo, sin azul) */
-  --hero-bg: linear-gradient(180deg, #ffffff 0%, #f5f5f7 48%, #fafafa 100%);
-  --hero-radial-a: rgba(0, 0, 0, 0.05);
-  --hero-radial-b: rgba(0, 0, 0, 0.035);
-  --hero-figure-mask: linear-gradient(135deg, rgba(0, 0, 0, 0.06) 0%, transparent 52%);
-  --hero-canvas-rgb: 72, 72, 74;
-  --hero-dot-alpha: 0.11;
+  /* Hero — siempre azul marino Pymática, independiente del tema */
+  --hero-bg: radial-gradient(ellipse at 78% 15%, #16266b 0%, transparent 55%), linear-gradient(160deg, #0A1747 0%, #081530 55%, #060C28 100%);
+  --hero-radial-a: rgba(22, 87, 245, 0.28);
+  --hero-radial-b: rgba(22, 87, 245, 0.16);
+  --hero-figure-mask: linear-gradient(135deg, rgba(22, 87, 245, 0.16) 0%, transparent 52%);
+  --hero-canvas-rgb: 108, 148, 255;
+  --hero-dot-alpha: 0.16;
 
-  /* Folio overlay — always dark for white text contrast */
-  --folio-overlay-a: rgba(15, 23, 42, 0.92);
-  --folio-overlay-b: rgba(15, 23, 42, 0.4);
+  /* Folio overlay — always dark navy for white text contrast */
+  --folio-overlay-a: rgba(8, 15, 43, 0.93);
+  --folio-overlay-b: rgba(8, 15, 43, 0.42);
 
-  /* Aurora CTA — bruma neutra */
-  --aurora-a: rgba(0, 0, 0, 0.04);
-  --aurora-b: rgba(0, 0, 0, 0.025);
-  --aurora-c: rgba(0, 0, 0, 0.02);
+  /* Aurora CTA — bruma azulada */
+  --aurora-a: rgba(22, 87, 245, 0.07);
+  --aurora-b: rgba(10, 23, 71, 0.05);
+  --aurora-c: rgba(182, 146, 75, 0.05);
 
-  /* Geometry — shared across themes */
-  --radius: 20px;
-  --radius-sm: 14px;
-  --radius-xs: 8px;
+  /* Geometry — shared across themes; esquinas más rectas, editorial */
+  --radius: 6px;
+  --radius-sm: 4px;
+  --radius-xs: 3px;
   --radius-pill: 999px;
+  --radius-btn: 3px;
 
   /* Spacing */
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --header-h: 7rem;
   --space: 6rem;
   --width-max: 1200px;
+
+  /* Hero text — el hero es siempre azul marino Pymática, en ambos temas */
+  --hero-text: #F7F4EC;
+  --hero-text-secondary: #C9D0E8;
+  --hero-text-muted: #94A0C4;
+  --hero-border: rgba(245, 241, 230, 0.16);
 }
 
-/* DARK MODE — estética tipo Apple (negro, grises del sistema, texto off-white) */
+/* DARK MODE — azul marino profundo, texto marfil, acento azul eléctrico */
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --bg-primary: #000000;
-  --bg-secondary: #1d1d1f;
-  --bg-tertiary: #2c2c2e;
-  --bg-card: #1c1c1e;
-  --bg-card-hover: #2c2c2e;
-  --bg-surface: #3a3a3c;
-  --bg-glass: rgba(29, 29, 31, 0.72);
-  --bg-glass-solid: rgba(29, 29, 31, 0.94);
+  --bg-primary: #070E29;
+  --bg-secondary: #0B1638;
+  --bg-tertiary: #101F4C;
+  --bg-card: #0C1940;
+  --bg-card-hover: #122156;
+  --bg-surface: #16296B;
+  --bg-glass: rgba(7, 14, 41, 0.78);
+  --bg-glass-solid: rgba(9, 18, 48, 0.95);
 
-  --border: rgba(255, 255, 255, 0.1);
-  --border-hover: rgba(255, 255, 255, 0.16);
-  --border-accent: rgba(255, 255, 255, 0.22);
+  --border: rgba(224, 217, 194, 0.14);
+  --border-hover: rgba(224, 217, 194, 0.24);
+  --border-accent: rgba(108, 148, 255, 0.32);
 
-  --text-primary: #f5f5f7;
-  --text-secondary: #a1a1a6;
-  --text-muted: #98989d;
-  --text-placeholder: #a8a8ad;
+  --text-primary: #F5F1E6;
+  --text-secondary: #B9C0DC;
+  --text-muted: #8A93B8;
+  --text-placeholder: #8A93B8;
 
-  /* Acento — blanco / gris claro (botones primarios tipo Apple en oscuro) */
-  --accent: #ffffff;
-  --accent-hover: #e5e5ea;
-  --accent-secondary: #d1d1d6;
-  --accent-dim: #c7c7cc;
-  --accent-soft: rgba(255, 255, 255, 0.1);
-  --accent-glow: rgba(255, 255, 255, 0.14);
-  --accent-glow-strong: rgba(255, 255, 255, 0.22);
-  --accent-contrast: #000000;
-  --accent-rgb: 255, 255, 255;
+  /* Acento — azul eléctrico más luminoso sobre marino */
+  --accent: #3E7BFF;
+  --accent-hover: #6C9AFF;
+  --accent-secondary: #F5F1E6;
+  --accent-dim: #C7D2FF;
+  --accent-soft: rgba(62, 123, 255, 0.14);
+  --accent-glow: rgba(62, 123, 255, 0.22);
+  --accent-glow-strong: rgba(62, 123, 255, 0.36);
+  --accent-contrast: #04091F;
+  --accent-rgb: 62, 123, 255;
+
+  --gold: #D8B876;
+  --gold-soft: rgba(216, 184, 118, 0.14);
 
   --ok: #30d158;
   --ok-soft: rgba(48, 209, 88, 0.14);
 
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.55);
-  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.08);
+  --shadow-glow: 0 0 40px rgba(62, 123, 255, 0.22);
   --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.35);
 
-  --hero-bg: linear-gradient(180deg, #000000 0%, #000000 35%, #1c1c1e 100%);
-  --hero-radial-a: rgba(255, 255, 255, 0.06);
-  --hero-radial-b: rgba(255, 255, 255, 0.04);
-  --hero-figure-mask: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, transparent 52%);
-  --hero-canvas-rgb: 160, 160, 165;
-  --hero-dot-alpha: 0.085;
+  --hero-bg: radial-gradient(ellipse at 78% 15%, #16266b 0%, transparent 55%), linear-gradient(160deg, #0A1747 0%, #081530 55%, #04081E 100%);
+  --hero-radial-a: rgba(62, 123, 255, 0.3);
+  --hero-radial-b: rgba(62, 123, 255, 0.18);
+  --hero-figure-mask: linear-gradient(135deg, rgba(62, 123, 255, 0.18) 0%, transparent 52%);
+  --hero-canvas-rgb: 130, 165, 255;
+  --hero-dot-alpha: 0.13;
 
-  --folio-overlay-a: rgba(0, 0, 0, 0.92);
-  --folio-overlay-b: rgba(0, 0, 0, 0.45);
+  --folio-overlay-a: rgba(4, 8, 25, 0.94);
+  --folio-overlay-b: rgba(4, 8, 25, 0.48);
 
-  --aurora-a: rgba(255, 255, 255, 0.06);
-  --aurora-b: rgba(255, 255, 255, 0.035);
-  --aurora-c: rgba(255, 255, 255, 0.02);
+  --aurora-a: rgba(62, 123, 255, 0.09);
+  --aurora-b: rgba(216, 184, 118, 0.05);
+  --aurora-c: rgba(62, 123, 255, 0.05);
 }
 
 /* ─── 2. THEME TRANSITION ─── */
@@ -363,8 +379,10 @@ a {
 .s-header__menu-links a {
   display: block;
   font-family: var(--font-body);
-  font-size: 1.35rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--text-secondary);
   padding: 0.5rem 0.85rem;
   border-radius: var(--radius-pill);
@@ -441,13 +459,15 @@ a {
   justify-content: center;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   height: 4.2rem;
   padding: 0 2rem;
   color: var(--accent-contrast);
   background: var(--accent);
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-btn);
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -697,14 +717,40 @@ a {
 
 .s-intro__text { position: relative; }
 
+/* Eyebrow label — echo del isotipo (cuadrado azul) + tracking editorial */
+.s-intro__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 2rem;
+  opacity: 0;
+  animation: fade-up 0.7s ease 0.5s forwards;
+}
+
+.s-intro__eyebrow::before {
+  content: '';
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 3px;
+  background: var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 12px var(--accent-glow-strong);
+}
+
 /* Hero title — word-stagger reveal */
 .s-intro__title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(3.6rem, 5.5vw, 6rem);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
+  font-size: clamp(3.6rem, 5.5vw, 5.8rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--hero-text);
   margin: 0 0 2rem;
 }
 
@@ -731,7 +777,7 @@ a {
 .s-intro__lead {
   font-size: clamp(1.7rem, 1.6vw, 2rem);
   line-height: 1.65;
-  color: var(--text-secondary);
+  color: var(--hero-text-secondary);
   max-width: 38ch;
   margin: 0 0 2.8rem;
   opacity: 0;
@@ -758,7 +804,7 @@ a {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--hero-border);
   position: relative;
   will-change: transform;
   transition: transform 0.1s ease-out;
@@ -801,13 +847,13 @@ a {
 
 .hero-stat__label {
   font-size: 1.25rem;
-  color: var(--text-muted);
+  color: var(--hero-text-muted);
   margin-top: 0.3rem;
   font-weight: 500;
 }
 
 .s-intro .hero-stat__number {
-  color: var(--text-primary);
+  color: var(--hero-text);
 }
 
 /* Scroll-down indicator */
@@ -825,21 +871,21 @@ a {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--hero-text-muted);
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   transition: color 0.25s;
 }
 
-.s-intro__scroll-link:hover { color: var(--text-primary); }
+.s-intro__scroll-link:hover { color: var(--hero-text); }
 
 .s-intro__scroll-link::after {
   content: '';
   display: inline-block;
   width: 1px;
   height: 2.4rem;
-  background: var(--text-primary);
+  background: var(--hero-text-muted);
   animation: scroll-bounce 1.8s ease-in-out infinite;
 }
 
@@ -855,11 +901,13 @@ a {
   justify-content: center;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 1.4rem;
-  padding: 1.3rem 2.4rem;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1.3rem 2.6rem;
   min-height: 5rem;
-  border-radius: var(--radius-pill);
-  border: 2px solid transparent;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid transparent;
   cursor: pointer;
   text-decoration: none;
   position: relative;
@@ -911,6 +959,18 @@ a {
   background: var(--accent-soft);
 }
 
+/* Ghost button sobre el hero (siempre azul marino) — texto marfil, no el del tema */
+.s-intro__actions .btn--ghost {
+  color: var(--hero-text);
+  border-color: rgba(245, 241, 230, 0.35);
+}
+
+.s-intro__actions .btn--ghost:hover {
+  border-color: var(--accent-dim, var(--accent));
+  color: var(--hero-text);
+  background: rgba(245, 241, 230, 0.08);
+}
+
 /* ─── 12. SECTION HEADERS ─── */
 .section-header {
   max-width: var(--width-max);
@@ -935,14 +995,26 @@ a {
 }
 
 .section-header__pretitle {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--gold);
   margin: 0;
   order: -1;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.section-header__pretitle::before {
+  content: '';
+  display: inline-block;
+  width: 2.6rem;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.7;
 }
 
 .section-header__grid {
@@ -1209,7 +1281,7 @@ a {
   /* Fondo siempre claro y fijo (no theme-aware): los logos no deben perderse
      contra el fondo negro del tema oscuro. */
   background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(10, 23, 71, 0.1);
   border-radius: var(--radius-sm);
   transition:
     border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1218,7 +1290,7 @@ a {
 
 .clients-carousel__item:hover,
 .clients-carousel__item:focus-within {
-  border-color: rgba(15, 23, 42, 0.18);
+  border-color: rgba(10, 23, 71, 0.22);
   box-shadow: var(--shadow-card);
 }
 
@@ -1461,12 +1533,12 @@ a {
 }
 
 .folio-item__cat {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #a1a1a6;
+  color: var(--gold);
   margin: 0 0 0.5rem;
 }
 
@@ -1475,7 +1547,7 @@ a {
   font-size: 1.85rem;
   font-weight: 700;
   /* Always light text on dark overlay */
-  color: #F1F5F9;
+  color: #F5F1E6;
   margin: 0;
   line-height: 1.3;
 }
@@ -1512,51 +1584,64 @@ a {
   .benefits-grid { grid-template-columns: 1fr; }
 }
 
+/* Sin caja/borde/sombra a propósito: es una lista editorial dividida por líneas,
+   no otra grilla de "cards" — para no repetir el lenguaje visual de Servicios. */
 .benefit-card {
-  padding: 2.4rem 2rem;
-  background: var(--bg-card);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  transition:
-    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.benefit-card:hover {
-  border-color: var(--border-accent);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-card);
-}
+.benefit-card:hover { transform: translateY(-2px); }
 
-/* Accent bar at top */
+/* Cuadrado — eco del isotipo, mismo motivo que el eyebrow del hero */
 .benefit-card::before {
   content: '';
   display: block;
-  width: 3rem;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+  width: 0.9rem;
+  height: 0.9rem;
   border-radius: 2px;
-  margin-bottom: 1.4rem;
-  transition: width 0.3s;
+  background: var(--accent);
+  margin-bottom: 1.6rem;
+  transition: background 0.3s;
 }
 
-.benefit-card:hover::before { width: 4.5rem; }
+.benefit-card:hover::before { background: var(--gold); }
 
 .benefit-card strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.7rem;
 }
 
 .benefit-card span {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: var(--text-secondary);
-  line-height: 1.55;
+  line-height: 1.6;
+}
+
+/* Divisores finos entre items — misma cadencia que las columnas del grid,
+   en vez de bordes de card alrededor de cada uno */
+@media screen and (max-width: 499px) {
+  .benefit-card { padding-top: 2.2rem; border-top: 1px solid var(--border); }
+  .benefit-card:first-child { padding-top: 0; border-top: none; }
+}
+
+@media screen and (min-width: 500px) and (max-width: 899px) {
+  .benefit-card { padding-left: 2.2rem; border-left: 1px solid var(--border); }
+  .benefit-card:nth-child(2n+1) { padding-left: 0; border-left: none; }
+}
+
+@media screen and (min-width: 900px) {
+  .benefit-card { padding-left: 2.4rem; border-left: 1px solid var(--border); }
+  .benefit-card:nth-child(4n+1) { padding-left: 0; border-left: none; }
 }
 
 /* ─── 17. PROCESS ─── */
@@ -1574,6 +1659,8 @@ a {
   background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
 }
 
+/* Timeline conectada en vez de otra grilla de cards: los pasos son una secuencia,
+   no ítems intercambiables — el marcador circular + línea lo transmite mejor. */
 .process-steps {
   counter-reset: step;
   max-width: var(--width-max);
@@ -1582,6 +1669,7 @@ a {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.2rem;
+  position: relative;
 }
 
 @media screen and (min-width: 640px) {
@@ -1590,42 +1678,60 @@ a {
 
 @media screen and (min-width: 1100px) {
   .process-steps { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.4rem; }
+
+  /* Línea que conecta los marcadores — solo tiene sentido en una sola fila */
+  .process-steps::after {
+    content: '';
+    position: absolute;
+    top: 1.8rem;
+    left: var(--gutter);
+    right: var(--gutter);
+    height: 1px;
+    background: var(--border-hover);
+    z-index: 0;
+  }
 }
 
 .process-step {
-  padding: 2.2rem 1.8rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  transition:
-    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+  z-index: 1;
 }
 
-.process-step:hover {
-  border-color: var(--border-accent);
-  box-shadow: var(--shadow-card);
-  transform: translateY(-2px);
-}
+.process-step:hover { transform: translateY(-2px); }
 
 .process-step::before {
   counter-increment: step;
   content: counter(step, decimal-leading-zero);
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin-bottom: 1.6rem;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--accent);
   color: var(--accent);
-  display: block;
-  margin-bottom: 1rem;
-  line-height: 1;
-  opacity: 0.7;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.process-step:hover::before {
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 .process-step h3 {
   font-family: var(--font-display);
-  font-size: 1.55rem;
+  font-size: 1.7rem;
   font-weight: 700;
   margin: 0 0 0.6rem;
   color: var(--text-primary);
@@ -1634,9 +1740,20 @@ a {
 
 .process-step p {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   line-height: 1.6;
   color: var(--text-secondary);
+}
+
+/* Divisores solo cuando no hay línea horizontal (1 y 2 columnas) */
+@media screen and (max-width: 639px) {
+  .process-step { padding-top: 2.2rem; border-top: 1px solid var(--border); }
+  .process-step:first-child { padding-top: 0; border-top: none; }
+}
+
+@media screen and (min-width: 640px) and (max-width: 1099px) {
+  .process-step { padding-left: 2.2rem; border-left: 1px solid var(--border); }
+  .process-step:nth-child(2n+1) { padding-left: 0; border-left: none; }
 }
 
 /* ─── 18. SOCIAL PROOF / MARQUEE ─── */
@@ -1771,7 +1888,7 @@ a {
   margin: 0 0 1.5rem;
 }
 
-.s-cta-final__title .accent-text { color: var(--accent); }
+.s-cta-final__title .accent-text { color: var(--accent); font-style: italic; }
 
 .s-cta-final__desc {
   font-size: 1.7rem;
@@ -1864,7 +1981,7 @@ a {
   padding: 1.3rem 1.5rem;
   background: var(--bg-secondary);
   border: 1.5px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 1.55rem;
@@ -1931,10 +2048,12 @@ a {
   background: var(--accent);
   color: var(--accent-contrast);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
   overflow: hidden;
   transition: opacity 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
@@ -1965,7 +2084,7 @@ a {
 /* ── Form status message ── */
 .form-status {
   padding: 1.2rem 1.5rem;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   font-size: 1.4rem;
   font-weight: 500;
   opacity: 0;
@@ -2301,6 +2420,7 @@ a {
     animation: none;
   }
 
+  .s-intro__eyebrow,
   .s-intro__lead,
   .s-intro__actions,
   .hero-stats {
