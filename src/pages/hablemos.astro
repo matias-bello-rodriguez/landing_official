@@ -1,0 +1,78 @@
+---
+import PageShell from "../components/PageShell.astro";
+---
+
+<PageShell title="Hablemos — Pymatica">
+<section class="dark-hero" style="background-image:url('/assets/photos/demo-hero.jpg')">
+        <p class="slash light"><span class="accent">//</span> Conversemos</p>
+        <h1>Cuéntanos qué quieres resolver</h1>
+        <p>Puede ser un problema de software, ERP, integración, automatización, IA o seguridad. Cuéntanos el contexto y vemos juntos cómo abordarlo.</p>
+      </section>
+      <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>ERP ✻</span><span>IA ✻</span><span>Integraciones ✻</span><span>Automatización ✻</span><span>Datos ✻</span><span>Seguridad ✻</span><span>ERP ✻</span><span>IA ✻</span><span>Integraciones ✻</span><span>Automatización ✻</span><span>Datos ✻</span><span>Seguridad ✻</span></div></div>
+      <section class="demo-layout">
+        <form id="contactForm" class="demo-form" novalidate>
+          <p class="demo-form__lead">También puedes escribir a <a href="mailto:contacto@pymatica.cl">contacto@pymatica.cl</a> o seguirnos en <a href="https://www.linkedin.com/company/pymatica/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+
+          <label class="form-group">Nombre completo *
+            <input type="text" id="user_name" name="user_name" placeholder="Tu nombre completo" required autocomplete="name" />
+            <span class="field-error" id="error-user_name"></span>
+          </label>
+
+          <label class="form-group">Correo electrónico *
+            <input type="email" id="user_email" name="user_email" placeholder="tu@empresa.cl" required autocomplete="email" />
+            <span class="field-error" id="error-user_email"></span>
+          </label>
+
+          <label class="form-group">Teléfono (opcional)
+            <input type="tel" id="user_phone" name="user_phone" placeholder="+56 9 XXXX XXXX" autocomplete="tel" />
+          </label>
+
+          <label class="form-group">Empresa (opcional)
+            <input type="text" id="user_company" name="user_company" placeholder="Nombre de tu empresa" />
+          </label>
+
+          <label class="form-group">¿Qué servicio te interesa? *
+            <select id="service_interest" name="service_interest" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="ERP">Sistema ERP</option>
+              <option value="Automatización">Automatización de procesos</option>
+              <option value="Desarrollo a medida">Desarrollo a medida</option>
+              <option value="Consultoría">Consultoría tecnológica</option>
+              <option value="Otro">Otro</option>
+            </select>
+            <span class="field-error" id="error-service_interest"></span>
+          </label>
+
+          <label class="form-group">Mensaje *
+            <textarea id="message" name="message" rows="5" placeholder="Cuéntanos sobre tu proyecto o consulta..." required></textarea>
+            <span class="field-error" id="error-message"></span>
+          </label>
+
+          <!-- Honeypot anti-spam -->
+          <input type="text" name="bot_field" class="bot-field" tabindex="-1" autocomplete="off" />
+
+          <button class="btn-primary" type="submit" id="submitBtn" data-state="idle">
+            <span class="btn-text">Enviar mensaje</span>
+            <span class="btn-loader" hidden aria-hidden="true"></span>
+            <span class="btn-success-text" hidden aria-hidden="true">✓ Enviado</span>
+            <span class="btn-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+
+          <div class="form-status" id="formStatus" role="alert" aria-live="polite"></div>
+        </form>
+        <aside class="demo-aside">
+          <h2>Qué pasa después</h2>
+          <p>Una conversación corta para entender el contexto y proponer el siguiente paso.</p>
+          <ul>
+            <li>Escuchamos tu problema real</li>
+            <li>Revisamos sistemas y restricciones</li>
+            <li>Proponemos un camino concreto</li>
+            <li>Sin compromiso inicial</li>
+          </ul>
+        </aside>
+      </section>
+</PageShell>
+
+<script>
+  import "../scripts/contact-form.js";
+</script>

@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "./Header.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  pageClass?: string;
+}
+
+const { title, description, pageClass = "" } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <div class={`page page-tall page-ideas ${pageClass}`.trim()}>
+    <div class="bg-waves" aria-hidden="true"></div>
+    <Header />
+    <main>
+      <slot />
+    </main>
+  </div>
+  <slot name="scripts" />
+</Layout>
