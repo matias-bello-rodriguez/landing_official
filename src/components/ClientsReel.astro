@@ -1,0 +1,30 @@
+---
+const clients = [
+  { file: "ucsc.png", alt: "UCSC" },
+  { file: "salfamantenciones.png", alt: "Salfa Mantenciones" },
+  { file: "bosch.png", alt: "Bosch" },
+  { file: "bupa-chile.png", alt: "Hospital Bupa" },
+  { file: "hospital-barros-luco.png", alt: "Hospital Barros Luco" },
+  { file: "otic-sofofa.png", alt: "OTIC Sofofa" },
+  { file: "delonix.png", alt: "Delonix" },
+  { file: "wsa-maritime.png", alt: "WSA Maritime Services" },
+];
+
+const loop = [...clients, ...clients];
+---
+
+<section class="clients-reel" aria-label="Empresas con las que trabajamos">
+  <div class="clients-reel__track">
+    {
+      loop.map((client, i) => (
+        <div class="clients-reel__item">
+          <img
+            src={`/assets/clientes/${client.file}`}
+            alt={i < clients.length ? client.alt : ""}
+            loading="lazy"
+          />
+        </div>
+      ))
+    }
+  </div>
+</section>

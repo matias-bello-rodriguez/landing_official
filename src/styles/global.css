@@ -1161,7 +1161,70 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
+  .marquee-track,
+  .clients-reel__track { animation: none; }
+}
+
+.clients-reel {
+  background: #fff;
+  overflow: hidden;
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  margin-top: -8px;
+  margin-bottom: 36px;
+  padding: 22px 0;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 10px 28px rgba(0, 45, 114, 0.06);
+}
+
+.clients-reel::before,
+.clients-reel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 72px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.clients-reel::before {
+  left: 0;
+  background: linear-gradient(90deg, #fff, transparent);
+}
+
+.clients-reel::after {
+  right: 0;
+  background: linear-gradient(270deg, #fff, transparent);
+}
+
+.clients-reel__track {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+  padding: 0 28px;
+}
+
+.clients-reel__item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+}
+
+.clients-reel__item img {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+}
+
+.clients-reel:hover .clients-reel__track {
+  animation-play-state: paused;
 }
 
 /* About collage */
