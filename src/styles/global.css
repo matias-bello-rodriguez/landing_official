@@ -42,12 +42,13 @@ body {
   min-height: 100%;
   max-width: 100%;
   overflow-x: clip;
+  background: var(--navy);
 }
 
 body {
   font-family: var(--font);
   color: var(--ink);
-  background: var(--page);
+  background: var(--navy);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -1163,7 +1164,9 @@ a.blog-card:hover h3 {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(10,17,40,0.92) 0%, rgba(10,17,40,0.72) 55%, rgba(10,17,40,0.45) 100%);
+  background:
+    linear-gradient(180deg, rgba(0, 26, 74, 0.88) 0%, rgba(0, 26, 74, 0.28) 34%, rgba(0, 26, 74, 0.28) 62%, rgba(0, 26, 74, 0.94) 100%),
+    linear-gradient(90deg, rgba(10, 17, 40, 0.88) 0%, rgba(10, 17, 40, 0.62) 55%, rgba(10, 17, 40, 0.4) 100%);
   z-index: 0;
 }
 
@@ -1633,6 +1636,7 @@ a.blog-card:hover h3 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 38% 30%;
   z-index: 0;
 }
 
@@ -1641,10 +1645,10 @@ a.blog-card:hover h3 {
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(105deg, rgba(8, 12, 32, 0.88) 0%, rgba(10, 17, 40, 0.72) 45%, rgba(14, 30, 80, 0.55) 100%),
-    linear-gradient(0deg, rgba(8, 12, 32, 0.55), transparent 50%);
-  backdrop-filter: saturate(0.85) contrast(1.05);
-  -webkit-backdrop-filter: saturate(0.85) contrast(1.05);
+    linear-gradient(180deg, rgba(0, 26, 74, 0.9) 0%, rgba(0, 26, 74, 0.28) 32%, rgba(0, 26, 74, 0.32) 58%, rgba(0, 26, 74, 0.96) 100%),
+    linear-gradient(105deg, rgba(0, 26, 74, 0.72) 0%, rgba(0, 26, 74, 0.28) 48%, rgba(0, 45, 114, 0.22) 100%);
+  backdrop-filter: saturate(0.9) contrast(1.04);
+  -webkit-backdrop-filter: saturate(0.9) contrast(1.04);
   mix-blend-mode: normal;
 }
 
@@ -1693,12 +1697,13 @@ a.blog-card:hover h3 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 32%;
 }
 
 .video-tile__filter {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10, 17, 40, 0.15) 0%, rgba(10, 17, 40, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(0, 26, 74, 0.55) 0%, rgba(0, 26, 74, 0.18) 38%, rgba(0, 26, 74, 0.82) 100%);
   z-index: 1;
 }
 
@@ -1726,6 +1731,7 @@ a.blog-card:hover h3 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 32%;
   z-index: 0;
 }
 
@@ -1790,7 +1796,8 @@ a.blog-card:hover h3 {
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(90deg, rgba(8, 12, 32, 0.9) 0%, rgba(10, 17, 40, 0.7) 50%, rgba(46, 91, 255, 0.45) 100%);
+    linear-gradient(180deg, rgba(0, 26, 74, 0.82) 0%, rgba(0, 26, 74, 0.28) 36%, rgba(0, 26, 74, 0.88) 100%),
+    linear-gradient(90deg, rgba(0, 26, 74, 0.82) 0%, rgba(0, 45, 114, 0.45) 55%, rgba(0, 96, 240, 0.28) 100%);
 }
 
 .video-band__content {
@@ -3169,20 +3176,6 @@ a.blog-card:hover h3 {
   background: linear-gradient(180deg, rgba(0, 45, 114, 0.05), rgba(0, 26, 74, 0.45));
 }
 
-.ally-card__index {
-  position: absolute;
-  left: 16px;
-  bottom: 14px;
-  z-index: 1;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #fff;
-  background: rgba(0, 96, 240, 0.9);
-  border-radius: 999px;
-  padding: 6px 12px;
-}
-
 .ally-card__body {
   display: flex;
   flex-direction: column;
@@ -3408,16 +3401,6 @@ a.blog-card:hover h3 {
   height: 100%;
   object-fit: contain;
   display: block;
-}
-
-.pillar-card__num {
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  background: #eef3fb;
-  border-radius: 999px;
-  padding: 6px 10px;
 }
 
 .pillar-card h3 {
@@ -3740,6 +3723,20 @@ main > :not(.video-hero):not(.dark-hero):not(.marquee):not(.demo-layout) {
     margin-right: 0;
   }
 
+  .video-hero__media {
+    object-position: 35% 28%;
+  }
+
+  .video-tile video,
+  .card-side__media,
+  .svc-card--video video {
+    object-position: 50% 30%;
+  }
+
+  .card-empresas__photo video {
+    object-position: 50% 38%;
+  }
+
   .page-home .video-hero--home .video-hero__content {
     padding: 24px 18px 18px;
     gap: 10px;
@@ -3805,6 +3802,7 @@ main > :not(.video-hero):not(.dark-hero):not(.marquee):not(.demo-layout) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 30%;
   z-index: 0;
 }
 
