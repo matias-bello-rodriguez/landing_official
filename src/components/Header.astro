@@ -83,10 +83,6 @@ function isActive(href: string) {
     };
 
     const syncScrolled = () => {
-      if (!header.classList.contains("nav--on-hero") || !header.classList.contains("is-compact")) {
-        header.classList.remove("is-scrolled");
-        return;
-      }
       header.classList.toggle("is-scrolled", window.scrollY > 16);
     };
 

@@ -72,7 +72,7 @@ button {
   min-height: 100vh;
   --content-max: 1360px;
   --page-pad-x: max(24px, calc((100vw - var(--content-max)) / 2));
-  padding: 28px 0 0;
+  padding: 0;
   border-radius: 0;
   background: var(--page);
   overflow: visible;
@@ -519,7 +519,7 @@ button {
 /* Responsive */
 @media (max-width: 980px) {
   .page {
-    padding: 20px 0 0;
+    padding: 0;
     --page-pad-x: 16px;
   }
 
@@ -2343,6 +2343,80 @@ a.blog-card:hover h3 {
   display: none;
 }
 
+.nav-pymatica.nav--on-hero {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  margin-bottom: 0;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  background: transparent;
+  box-shadow: none;
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+}
+
+.nav-pymatica.nav--on-hero.is-scrolled,
+.nav-pymatica.nav--on-hero.is-open {
+  background: var(--navy);
+  box-shadow: 0 8px 24px rgba(0, 26, 74, 0.28);
+}
+
+.nav-pymatica.nav--on-hero .logo-img--color {
+  display: none;
+}
+
+.nav-pymatica.nav--on-hero .logo-img--white {
+  display: block;
+}
+
+.nav-pymatica.nav--on-hero .logo-text {
+  color: #fff;
+}
+
+.nav-pymatica.nav--on-hero:not(.is-compact) .nav-links {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.nav-pymatica.nav--on-hero:not(.is-compact) .nav-links a.is-active {
+  color: #fff;
+  font-weight: 700;
+}
+
+.nav-pymatica.nav--on-hero .nav-social {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.nav-pymatica.nav--on-hero .nav-social:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.nav-pymatica.nav--on-hero .btn-outline {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: transparent;
+  color: #fff;
+}
+
+.nav-pymatica.nav--on-hero .btn-outline:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.page:not(.page-home) main > .video-hero {
+  min-height: 520px;
+  padding-top: 76px;
+  box-sizing: border-box;
+}
+
+.page:not(.page-home) main > .dark-hero {
+  min-height: 380px;
+  padding-top: 100px;
+}
+
 .nav.is-compact {
   position: fixed;
   top: 0;
@@ -2493,17 +2567,6 @@ a.blog-card:hover h3 {
 
   .page-home .video-hero--home {
     min-height: 100dvh;
-  }
-
-  .page:not(.page-home) main > .video-hero {
-    min-height: 520px;
-    padding-top: 76px;
-    box-sizing: border-box;
-  }
-
-  .page:not(.page-home) main > .dark-hero {
-    min-height: 380px;
-    padding-top: 100px;
   }
 
   .demo-layout {
@@ -3543,7 +3606,7 @@ main > :not(.video-hero):not(.dark-hero):not(.marquee):not(.demo-layout) {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-end;
-  min-height: calc(100dvh - 7.25rem);
+  min-height: 100dvh;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
@@ -3602,17 +3665,7 @@ main > :not(.video-hero):not(.dark-hero):not(.marquee):not(.demo-layout) {
 }
 
 .brand-hero {
-  position: absolute;
-  right: 44px;
-  top: 32px;
-  bottom: auto;
-  left: auto;
-  z-index: 4;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0;
-  line-height: 1;
+  display: none;
 }
 
 .brand-hero__mark {
@@ -3997,6 +4050,11 @@ main > :not(.video-hero):not(.dark-hero):not(.marquee):not(.demo-layout) {
   background: var(--accent);
   color: #fff;
   transform: translateY(-1px);
+}
+
+.nav-pymatica.nav--on-hero .nav-social {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .site-footer {
