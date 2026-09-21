@@ -4,7 +4,7 @@ import PageShell from "../components/PageShell.astro";
 
 <PageShell title="Soluciones — Pymatica">
 <section class="video-hero">
-        <video class="video-hero__media" autoplay muted loop playsinline poster="/assets/photos/solutions-poster.jpg">
+        <video class="video-hero__media" autoplay muted loop playsinline preload="metadata" poster="/assets/photos/solutions-poster.jpg">
           <source src="/assets/videos/web-suits-crossing.mp4" type="video/mp4" />
         </video>
         <div class="video-hero__filter" aria-hidden="true"></div>
@@ -86,7 +86,7 @@ import PageShell from "../components/PageShell.astro";
         </div>
       </section>
       <section class="video-band">
-        <video class="video-band__media" autoplay muted loop playsinline>
+        <video class="video-band__media" muted loop playsinline preload="none">
           <source src="/assets/videos/web-business-city.mp4" type="video/mp4" />
         </video>
         <div class="video-band__filter"></div>

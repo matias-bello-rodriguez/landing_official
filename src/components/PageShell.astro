@@ -12,7 +12,7 @@ interface Props {
 const { title, description, pageClass = "" } = Astro.props;
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} pageClass={pageClass}>
   <div class={`page page-tall page-ideas ${pageClass}`.trim()}>
     <div class="bg-waves" aria-hidden="true"></div>
     <Header />
@@ -21,5 +21,9 @@ const { title, description, pageClass = "" } = Astro.props;
     </main>
     <Footer />
   </div>
+  <script>
+    import { initLazyVideos } from "../scripts/lazy-videos.js";
+    initLazyVideos();
+  </script>
   <slot name="scripts" />
 </Layout>

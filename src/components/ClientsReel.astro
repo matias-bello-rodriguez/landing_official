@@ -21,7 +21,10 @@ const loop = [...clients, ...clients];
           <img
             src={`/assets/clientes/white/${client.file}`}
             alt={i < clients.length ? client.alt : ""}
-            loading="lazy"
+            width="160"
+            height="48"
+            decoding="async"
+            loading={i < 4 ? "eager" : "lazy"}
           />
         </div>
       ))

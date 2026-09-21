@@ -5,8 +5,8 @@ import ClientsReel from "../components/ClientsReel.astro";
 
 <PageShell title="Pymatica — Tecnología que conecta" pageClass="page-home">
 <section class="video-hero video-hero--home" data-hero-reel>
-        <video class="video-hero__media is-active" autoplay muted loop playsinline poster="/assets/photos/solutions-poster.jpg"></video>
-        <video class="video-hero__media" muted loop playsinline></video>
+        <video class="video-hero__media is-active" autoplay muted loop playsinline preload="metadata" poster="/assets/photos/solutions-poster.jpg"></video>
+        <video class="video-hero__media" muted loop playsinline preload="none"></video>
         <div class="video-hero__filter" aria-hidden="true"></div>
         <div class="video-hero__content">
           <h1>Conectamos empresas con tecnología que realmente pueden usar</h1>
@@ -18,7 +18,7 @@ import ClientsReel from "../components/ClientsReel.astro";
         </div>
 
         <div class="brand-hero" aria-label="Pymatica">
-          <img class="brand-hero__mark" src="/assets/pymatica_logo_white.png" alt="" />
+          <img class="brand-hero__mark" src="/assets/pymatica_logo_white.png" alt="" width="48" height="48" decoding="async" />
           <span class="brand-hero__text">pymatica</span>
         </div>
 
@@ -33,7 +33,7 @@ import ClientsReel from "../components/ClientsReel.astro";
           </div>
 
           <div class="card-empresas__photo">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="none">
               <source src="/assets/videos/web-colleagues-walk.mp4" type="video/mp4" />
             </video>
           </div>
@@ -46,7 +46,7 @@ import ClientsReel from "../components/ClientsReel.astro";
         </article>
 
         <a class="card card-side card-side--asoc" href="/alianzas">
-          <video class="card-side__media" autoplay muted loop playsinline>
+          <video class="card-side__media" muted loop playsinline preload="none">
             <source src="/assets/videos/web-handshake.mp4" type="video/mp4" />
           </video>
           <span class="card-side__shade" aria-hidden="true"></span>
@@ -55,7 +55,7 @@ import ClientsReel from "../components/ClientsReel.astro";
         </a>
 
         <a class="card card-side card-side--partners" href="/alianzas">
-          <video class="card-side__media" autoplay muted loop playsinline>
+          <video class="card-side__media" muted loop playsinline preload="none">
             <source src="/assets/videos/web-office-hallway.mp4" type="video/mp4" />
           </video>
           <span class="card-side__shade" aria-hidden="true"></span>
@@ -70,28 +70,28 @@ import ClientsReel from "../components/ClientsReel.astro";
         </div>
         <div class="video-strip">
           <a class="video-tile" href="/soluciones">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="none">
               <source src="/assets/videos/tile-erp.mp4" type="video/mp4" />
             </video>
             <span class="video-tile__filter" aria-hidden="true"></span>
             <span>ERP</span>
           </a>
           <a class="video-tile" href="/soluciones">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="none">
               <source src="/assets/videos/tile-ia.mp4" type="video/mp4" />
             </video>
             <span class="video-tile__filter" aria-hidden="true"></span>
             <span>IA &amp; Automatización</span>
           </a>
           <a class="video-tile" href="/alianzas">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="none">
               <source src="/assets/videos/tile-alianzas.mp4" type="video/mp4" />
             </video>
             <span class="video-tile__filter" aria-hidden="true"></span>
             <span>Alianzas</span>
           </a>
           <a class="video-tile" href="/seguridad">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="none">
               <source src="/assets/videos/tile-seguridad.mp4" type="video/mp4" />
             </video>
             <span class="video-tile__filter" aria-hidden="true"></span>
@@ -140,7 +140,7 @@ import ClientsReel from "../components/ClientsReel.astro";
       </section>
 
       <section class="video-band">
-        <video class="video-band__media" autoplay muted loop playsinline>
+        <video class="video-band__media" muted loop playsinline preload="none">
           <source src="/assets/videos/web-business-city.mp4" type="video/mp4" />
         </video>
         <div class="video-band__filter"></div>
