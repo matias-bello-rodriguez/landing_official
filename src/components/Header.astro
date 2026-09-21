@@ -15,12 +15,13 @@ function isActive(href: string) {
 }
 ---
 
-<header class="nav nav-pymatica">
+<header class="nav nav-pymatica nav--on-hero">
   <a class="logo" href="/" aria-label="Pymatica">
-    <img class="logo-img" src="/assets/pymatica_logo.png" alt="" />
+    <img class="logo-img logo-img--color" src="/assets/pymatica_logo.png" alt="" />
+    <img class="logo-img logo-img--white" src="/assets/pymatica_logo_white.png" alt="" />
     <span class="logo-text">pymatica</span>
   </a>
-  <nav class="nav-links" aria-label="Principal">
+  <nav class="nav-links" id="site-nav" aria-label="Principal">
     {
       links.map((link) => (
         <a href={link.href} class={isActive(link.href) ? "is-active" : undefined}>
@@ -28,6 +29,7 @@ function isActive(href: string) {
         </a>
       ))
     }
+    <a class="nav-links__cta btn-cobalt" href="/hablemos">Hablemos</a>
   </nav>
   <div class="nav-actions">
     <a
@@ -41,6 +43,87 @@ function isActive(href: string) {
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
       </svg>
     </a>
+    <button
+      class="nav-menu-btn"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      aria-label="Abrir menú"
+    >
+      <span class="nav-menu-btn__bar" aria-hidden="true"></span>
+      <span class="nav-menu-btn__bar" aria-hidden="true"></span>
+      <span class="nav-menu-btn__bar" aria-hidden="true"></span>
+    </button>
     <a class="btn-outline" href="/hablemos">Hablemos</a>
   </div>
 </header>
+
+<script>
+  const header = document.querySelector(".nav");
+  const button = document.querySelector(".nav-menu-btn");
+  const nav = document.querySelector("#site-nav");
+
+  if (header instanceof HTMLElement && button instanceof HTMLButtonElement && nav instanceof HTMLElement) {
+    const close = () => {
+      header.classList.remove("is-open");
+      button.setAttribute("aria-expanded", "false");
+      button.setAttribute("aria-label", "Abrir menú");
+    };
+
+    const syncCompact = () => {
+      const widths = [
+        window.outerWidth,
+        window.visualViewport?.width,
+        window.innerWidth,
+        document.documentElement.clientWidth,
+      ].filter((value): value is number => typeof value === "number" && value > 0);
+      const compact = Math.min(...widths) <= 1100;
+      header.classList.toggle("is-compact", compact);
+      if (!compact) close();
+    };
+
+    const syncScrolled = () => {
+      if (!header.classList.contains("nav--on-hero") || !header.classList.contains("is-compact")) {
+        header.classList.remove("is-scrolled");
+        return;
+      }
+      header.classList.toggle("is-scrolled", window.scrollY > 16);
+    };
+
+    syncCompact();
+    syncScrolled();
+    window.addEventListener("resize", () => {
+      syncCompact();
+      syncScrolled();
+    });
+    window.visualViewport?.addEventListener("resize", () => {
+      syncCompact();
+      syncScrolled();
+    });
+    window.addEventListener("scroll", syncScrolled, { passive: true });
+
+    const toggle = () => {
+      const open = header.classList.toggle("is-open");
+      button.setAttribute("aria-expanded", String(open));
+      button.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    };
+
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggle();
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", close);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!header.classList.contains("is-open")) return;
+      if (event.target instanceof Node && !header.contains(event.target)) close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") close();
+    });
+  }
+</script>

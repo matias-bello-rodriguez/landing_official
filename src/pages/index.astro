@@ -1,6 +1,7 @@
 ---
 import PageShell from "../components/PageShell.astro";
 import ClientsReel from "../components/ClientsReel.astro";
+import OdooWord from "../components/OdooWord.astro";
 ---
 
 <PageShell title="Pymatica — Tecnología que conecta" pageClass="page-home">
@@ -21,9 +22,9 @@ import ClientsReel from "../components/ClientsReel.astro";
           <img class="brand-hero__mark" src="/assets/pymatica_logo_white.png" alt="" />
           <span class="brand-hero__text">pymatica</span>
         </div>
-      </section>
 
-      <ClientsReel />
+        <ClientsReel />
+      </section>
 
       <section class="cards home-cards" aria-label="Públicos">
         <article class="card card-empresas">
@@ -66,7 +67,6 @@ import ClientsReel from "../components/ClientsReel.astro";
 
       <section class="home-motion" aria-label="Capacidades en movimiento">
         <div class="home-motion__head">
-          <p class="slash"><span class="accent">//</span> En movimiento</p>
           <h2>Tecnología que se ve en la <span class="grad-text">operación</span></h2>
         </div>
         <div class="video-strip">
@@ -75,7 +75,7 @@ import ClientsReel from "../components/ClientsReel.astro";
               <source src="/assets/videos/tile-erp.mp4" type="video/mp4" />
             </video>
             <span class="video-tile__filter" aria-hidden="true"></span>
-            <span>ERP &amp; Operaciones</span>
+            <span><OdooWord tone="on-dark" /> ERP</span>
           </a>
           <a class="video-tile" href="/soluciones">
             <video autoplay muted loop playsinline>
@@ -107,8 +107,8 @@ import ClientsReel from "../components/ClientsReel.astro";
             <img src="/assets/icons/cap-erp.svg" alt="" />
           </span>
           <div>
-            <strong>ERP</strong>
-            <span>Operaciones ordenadas</span>
+            <strong><OdooWord /></strong>
+            <span>ERP flexible</span>
           </div>
         </a>
         <a class="principle-card" href="/soluciones">
@@ -151,7 +151,7 @@ import ClientsReel from "../components/ClientsReel.astro";
           </div>
           <div>
             <h3>Simple para las personas. Potente para la empresa.</h3>
-            <p>Empezamos por tu operación, no por la herramienta. Después conectamos ERP, IA, datos y seguridad.</p>
+            <p>Empezamos por tu operación, no por la herramienta. Después conectamos <OdooWord tone="on-dark" /> —un ERP flexible que se adapta a ti—, IA, datos y seguridad.</p>
             <a class="btn-cobalt" href="/hablemos">Hablemos de tu proyecto</a>
           </div>
         </div>

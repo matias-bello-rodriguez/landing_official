@@ -37,7 +37,7 @@ if (form) {
   const btnText = submitBtn?.querySelector(".btn-text");
   const btnLoader = submitBtn?.querySelector(".btn-loader");
   const btnDone = submitBtn?.querySelector(".btn-success-text");
-  const btnArrow = submitBtn?.querySelector(".btn-arrow");
+  const btnArrow = submitBtn?.querySelector(".btn-send__icon");
   const formStatus = document.getElementById("formStatus");
 
   function showFieldError(name, msg) {
@@ -78,10 +78,10 @@ if (form) {
   function setBtn(state) {
     if (!submitBtn) return;
     submitBtn.disabled = state === "loading" || state === "success";
-    if (btnText) btnText.hidden = state !== "idle";
+    if (btnText) btnText.hidden = state === "loading" || state === "success";
     if (btnLoader) btnLoader.hidden = state !== "loading";
     if (btnDone) btnDone.hidden = state !== "success";
-    if (btnArrow) btnArrow.hidden = state !== "idle";
+    if (btnArrow) btnArrow.hidden = state === "loading" || state === "success";
     submitBtn.dataset.state = state;
   }
 
