@@ -855,6 +855,12 @@ a.blog-card:hover h3 {
   grid-template-columns: 1fr 1fr;
   gap: 28px;
   align-items: start;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
 }
 
 .demo-form {
@@ -865,6 +871,11 @@ a.blog-card:hover h3 {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .demo-form label {
@@ -880,6 +891,10 @@ a.blog-card:hover h3 {
 .demo-form select,
 .demo-form textarea {
   font: inherit;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   border: 1.5px solid #d8d4cf;
   border-radius: 14px;
   padding: 12px 14px;
@@ -1492,7 +1507,20 @@ a.blog-card:hover h3 {
 .process h2 {
   font-size: clamp(1.7rem, 3vw, 2.2rem);
   letter-spacing: -0.03em;
-  margin-bottom: 36px;
+  margin-bottom: 12px;
+}
+
+.process-lead {
+  max-width: 46ch;
+  margin: 0 auto 32px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.process-lead strong {
+  color: var(--navy);
+  font-weight: 700;
 }
 
 .process-row {
@@ -2135,54 +2163,6 @@ a.blog-card:hover h3 {
   text-transform: lowercase;
 }
 
-.odoo-word {
-  display: inline-block;
-  height: 1.05em;
-  width: auto;
-  vertical-align: -0.18em;
-}
-
-.odoo-word--on-dark {
-  filter: brightness(0) invert(1);
-}
-
-h3 .odoo-word,
-strong .odoo-word {
-  display: block;
-  height: 1.15em;
-  margin-bottom: 2px;
-}
-
-.pillar-card h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.35em;
-}
-
-.pillar-card h3 .odoo-word {
-  display: inline-block;
-  height: 1.05em;
-  margin-bottom: 0;
-}
-
-.check-row .odoo-word {
-  height: 0.95em;
-  vertical-align: -0.14em;
-}
-
-.stats-banner__grid strong .odoo-word {
-  height: 0.72em;
-}
-
-.mini-stats strong .odoo-word {
-  height: 0.85em;
-}
-
-.video-tile .odoo-word {
-  height: 1.05em;
-  margin-right: 0.28em;
-  vertical-align: -0.2em;
-}
 .eyebrow,
 .slash .accent {
   color: var(--accent) !important;
@@ -2517,6 +2497,25 @@ strong .odoo-word {
   .page:not(.page-home) main > .dark-hero {
     min-height: 380px;
     padding-top: 100px;
+  }
+
+  .demo-layout {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: stretch;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .demo-form,
+  .demo-aside {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    justify-self: stretch;
+    padding: 22px 18px;
+    box-sizing: border-box;
   }
 
   .nav-pymatica {
@@ -3551,7 +3550,7 @@ html:has(.page-home) body {
   min-width: 0;
 }
 
-main > :not(.video-hero):not(.dark-hero):not(.marquee) {
+main > :not(.video-hero):not(.dark-hero):not(.marquee):not(.demo-layout) {
   margin-left: var(--page-pad-x);
   margin-right: var(--page-pad-x);
 }
@@ -3900,10 +3899,16 @@ main > :not(.video-hero):not(.dark-hero):not(.marquee) {
 
 .demo-form .bot-field {
   position: absolute;
-  left: -9999px;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  border: 0;
   opacity: 0;
-  height: 0;
-  width: 0;
   pointer-events: none;
 }
 
@@ -3998,14 +4003,28 @@ main > :not(.video-hero):not(.dark-hero):not(.marquee) {
 
 .site-footer {
   margin: 48px 0 0;
-  padding: 22px var(--page-pad-x);
+  padding: 22px var(--page-pad-x) 16px;
   background: var(--navy);
   color: #fff;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  justify-content: space-between;
   gap: 14px 28px;
+}
+
+.site-footer__sitemap {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.site-footer__sitemap:hover {
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .site-footer__brand {
@@ -4058,10 +4077,15 @@ main > :not(.video-hero):not(.dark-hero):not(.marquee) {
 
 @media (max-width: 980px) {
   .site-footer {
+    grid-template-columns: 1fr;
     padding-top: 20px;
-    padding-bottom: 28px;
-    align-items: flex-start;
-    flex-direction: column;
+    padding-bottom: 20px;
+    align-items: start;
+  }
+
+  .site-footer__sitemap {
+    justify-self: center;
+    margin-top: 8px;
   }
 }
 
