@@ -1640,6 +1640,24 @@ a.blog-card:hover h3 {
   z-index: 0;
 }
 
+.page video {
+  pointer-events: none;
+}
+
+.page video::-webkit-media-controls,
+.page video::-webkit-media-controls-enclosure,
+.page video::-webkit-media-controls-panel,
+.page video::-webkit-media-controls-start-playback-button,
+.page video::-webkit-media-controls-overlay-play-button,
+.page video::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
 .video-hero__filter {
   position: absolute;
   inset: 0;
